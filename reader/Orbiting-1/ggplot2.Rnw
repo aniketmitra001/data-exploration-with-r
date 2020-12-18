@@ -1,0 +1,545 @@
+% !Rnw root = main.Rnw
+%===============================
+\section{The ggplot2 Package}
+%===============================
+
+\begin{DIY}{Warning}
+\noindent \textcolor{red}{ggplot2 is not bundled with the base packages of R. So the user will have to install ggplot2 before being able to use it.}
+\end{DIY}
+
+\begin{HIGHLIGHT}
+\par\noindent{
+{\centering\textbf{\emph{\Large ggplot2 Terminology}} \\}
+\vspace{\baselineskip}
+\begin{enumerate}
+      \item \textbf{\emph{Data}} is what we want to visualize. It consists of \emph{variables} which are stored as columns in
+      a data frame.
+      \item \textbf{\emph{Geoms}} are the geometric objects that are drawn to represent the data, such as bars, lines, and points.
+      \item \textbf{\emph{Aesthetics}} are visual properties of geoms, such as x and y position, line color, point shapes, etc.
+      \item \textbf{\emph{Mappings}} represent the relationship between data values and aesthetics.
+      \item \textbf{\emph{Scales}} control the mapping from the the values in the data space, to values in the aesthetics space. 
+      \item \textbf{\emph{Guides}} show the viewer how to map the visual properties back to the data space. Commonly used guides are tick marks and labels on an axis.
+\end{enumerate}
+}
+\end{HIGHLIGHT}
+
+\begin{DIY}{Warning}
+\noindent \textcolor{red}{ggplot2 requires the data to be represented as a data frame wherein each variable, that is mapped to an asthetic must be represented as a column in the data frame.
+}
+\end{DIY}
+
+\begin{DIY}{Warning}
+\noindent ggplot2 uses the '$+$' operator to add, each of the components described above, to a visualization. Recall that the '$+$' operator is a function in R and the operands (in this case ggplot2 functions) are arguments to this function.
+\end{DIY}
+
+\begin{DIY}{Warning}
+\noindent The reader is urged to pay close attention to the comments section of the code snippets in this chapter, as the workings of ggplot2 has been explained in those comments.
+\end{DIY}
+
+<<cache.lazy=TRUE,echo=FALSE,message=FALSE,warning=FALSE>>=
+library(ggplot2)
+library(ggcorrplot)
+@
+
+\newpage
+\subsection{A Step By Step Guide To Visualization with ggplot2}
+\noindent \textbf{\Large \underline{Step 1}}: {\Large Add the \emph{data frame} that you wish to visualize}
+<<add data frame,echo=TRUE>>=
+graph <- ggplot(business) 
+##pass data frame to ggplot2
+graph
+@
+
+\begin{DIY}{Warning}
+\noindent Passing a data frame to the ggplot() function initializes a ggplot visualization without any axis or points i.e without any aesthetics. The next step is to add aesthetics to the plot.
+\end{DIY}
+
+\newpage
+\noindent \textbf{\Large \underline{Step 2}}: {\Large Set the \emph{Aesthetics} of the visualization} 
+<<add aesthetics,echo=TRUE,warning=FALSE,fig.height=5>>=
+graph <- graph + 
+aes( x = business$review_count,
+     y = business$stars
+)  
+##set the aesthetics of the x and y axis by mapping 
+## review count to the x axis and stars to the y axis
+graph
+@
+
+\begin{DIY}{Warning}
+\noindent Adding aesthetics to the plot results in addition of coordinate axis to the plot. As in the case of base graphics in R, one may need to create both or at least one axis using aesthetics. Note, that the argument passed to the \emph{aes()} function defines a \emph{mapping} from the columns in the data frame to its corresponding visual representation. Moreover, the axis labels are set to the column names by default. We will change this in the next steps.
+\end{DIY}
+
+\newpage
+\noindent \textbf{\Large \underline{Step 3}}: {\Large Add \emph{Geometry} to the visualization} 
+<<add geometry,echo=TRUE,warning=FALSE,fig.height=7>>=
+graph <- graph + geom_point()
+## add geometry and more specifically tell ggplot
+## to add points for (x,y) values
+graph
+@
+
+\begin{DIY}{Warning}
+\noindent Adding geometry, instructs the visualization system to generate a particular type of plot. For example \emph{geom\textunderscore point()} would generate a scatter plot, \emph{geom\textunderscore bar()} would generate a bar plot,
+ \emph{geom\textunderscore hist()} would generate a histogram etc.
+\end{DIY}
+
+\newpage
+\noindent \textbf{\Large \underline{Step 4}}: {\Large Add \emph{Guides} to the visualization} 
+<<add guides,echo=TRUE,warning=FALSE,fig.height=7>>=
+graph <- graph + 
+ggtitle( "Relationship between Reviews wrt Ratings",
+           subtitle = "A Scatterplot" ) + 
+xlab("Reviews") + ylab("Ratings")
+## add title and subtitle to the plot
+## add labels to the axis
+graph
+@
+
+\begin{DIY}{Warning}
+\noindent Adding guides to the visualization, implies adding  a title (Note the \emph{ggtitle()} function), labels (Note the \emph{xlab()} and \emph{ylab()} functions) and legends (Using the \emph{labs()} function) to the plot. 
+\end{DIY}
+
+\newpage
+\noindent \textbf{\Large \underline{Step 5}}: {\Large Set \emph{Aesthetics} to the \emph{Geoms}} 
+<<setting aesthetics,echo=TRUE,warning=FALSE,fig.height=7>>=
+graph <- graph + geom_point(colour = "blue")
+## set the colour of the points in the plot
+graph
+@
+
+\begin{DIY}{Warning}
+\noindent  ggplot allows us to set the aesthetics of the \emph{geoms} as shown here. However, there is a difference between \textbf{aesthetics setting} and \textbf{aesthetics mapping}. What is demonstrated here is an example of aesthetics setting
+\end{DIY}
+
+\begin{DIY}{Homework}
+\noindent  Pass aes(colour = "blue") as an argument to \emph{geom\textunderscore point()}. What do you observe?
+\end{DIY}
+
+\newpage
+\noindent \textbf{\Large \underline{Step 6}}: {\Large Add \emph{Facets} to the visualization}
+<<faceting,echo=TRUE,warning=FALSE,fig.height=7>>=
+graph + facet_grid( business$is_open ~ . )
+## Visualize Reviews by open/closed status
+@
+
+
+\begin{DIY}{Homework}
+\noindent Remove entries from the data frame that have reviews as NA. Moreover, add another column to the data frame that maps the is\textunderscore open values of "0" to "close" and "1" to "open". 
+Finally, regenerate the plot, but now faceted on the new column. Name the new data frame as "cleansedBusiness" and the new column as "status\textunderscore char". 
+\end{DIY}
+
+\newpage
+<<cache.lazy=TRUE,echo=FALSE,message=FALSE,warning=FALSE>>=
+cleansedBusiness <- business[!is.na(business$review_count),]
+status <-vector(mode = "character",length = length(cleansedBusiness$is_open))
+status[as.logical(cleansedBusiness$is_open)] <- "open"
+status[!as.logical(cleansedBusiness$is_open)] <- "closed"
+cleansedBusiness <- data.frame(cleansedBusiness,status_char = as.factor(status)) 
+@
+
+\newpage
+\subsection{Generating a \textbf{\emph{Boxplot}}}
+\noindent \textbf{\underline{Question}}: What is the distribution of ratings by status? 
+<<Boxplot,cache.lazy=TRUE,echo=TRUE,fig.height=5>>=
+graph <- ggplot( cleansedBusiness ) ## attach the new df to plotting env
+interval <- seq( 0, max(cleansedBusiness$stars), 0.5 ) ## create a sequence 
+## from 0 to max value of stars column with an increment value of 0.5
+graph <- graph + 
+aes( x = cleansedBusiness$status_char,  
+     ## map the new column to the x axis
+     y = cleansedBusiness$stars 
+     ## map the stars column to the y axis 
+   ) +
+geom_boxplot( outlier.color = "red" ) +
+##add geom to the plot in this case a box plot and set the colour of the 
+##outlier values to red
+ggtitle( "Distribution of Ratings by Status ", subtitle = "Boxplot" ) + 
+xlab( "Status" ) + ylab( "Ratings" )  ##add guides to the plot
+graph + scale_y_continuous( breaks = interval ) 
+##change the resolution of the y axis 
+@
+
+\begin{DIY}{Warning}
+\noindent Pay close attention the scale\textunderscore y\textunderscore continuous() function and the argument passed to it
+\end{DIY}
+
+\begin{DIY}{Warning}
+\noindent Note the outlier$.$color parameter that is set and passed to geom\textunderscore boxplot  
+\end{DIY}
+
+\begin{DIY}{Think}
+\noindent Read the help manual for scale\textunderscore x\textunderscore discrete() and argue why is scale\textunderscore y\textunderscore continuous() a better choice in this case.
+\end{DIY}
+
+
+\subsection{Generating a \textbf{\emph{Barplot}}}
+\noindent \textbf{\underline{Question}}: What is the distribution of reviews? 
+<<BarPlot,cache.lazy=TRUE,echo=TRUE,fig.height=5>>=
+graph <-  ggplot(cleansedBusiness) ## add data to the viz environment
+graph + 
+aes( x = cleansedBusiness$review_count )  +
+## map the review count column to the x axis . Since its a bar plot, the 
+## y axis is a count for each  element in the x axis  
+geom_bar() +
+## add geom to the plot in this case a bar plot   
+ggtitle( "Distribution of Review Count",
+         subtitle = "A Barplot" ) + 
+xlab("Reviews") + ylab("Frequency") # add guides to the viz environment
+@
+
+
+\begin{DIY}{Homework}
+\noindent Read the help manual for both geom\textunderscore bar()  and geom\textunderscore histogram().
+Try using geom\textunderscore histogram() instead of geom\textunderscore bar(). Explain your observation.
+\end{DIY}
+
+\newpage
+\subsection{Zooming into a Plot}
+\noindent \textbf{\underline{Question}}: What is the distribution of reviews within the 3rd quartile?
+<<Zooming In,cache.lazy=TRUE,echo=TRUE,fig.height=5>>=
+graph <-  ggplot(cleansedBusiness) ## add data to the viz environment
+thirdQuartile <- summary(cleansedBusiness$review_count)[5] 
+## The third quartile of the review counts
+graph <- graph + 
+aes(x = cleansedBusiness$review_count)  +
+ ## map the review count column to the x axis . Since its a bar plot, 
+## the y axis is a count for each  element in the x axis  
+geom_bar() +
+## add geom to the plot in this case a bar plot   
+ggtitle( "Distribution of Review Count",
+          subtitle = "A Zommed In Barplot" ) + 
+xlab( "Reviews" ) + ylab( "Frequency" )
+## add guides to the plot
+graph <- graph + 
+coord_cartesian( xlim = c(0,thirdQuartile) )  ## scale the x axis by  
+## limiting it to  show values only till the third quartile
+graph
+@
+
+\begin{DIY}{Homework}
+\noindent Read the help manual for both coord\textunderscore cartesian(). Try the above example without the coord\textunderscore cartesian() function. Explain your observation.
+\end{DIY}
+
+\newpage
+\subsection{Changing Axis Resolution}
+\noindent \textbf{\underline{Question}}: How do we change the resolution of the x axis to interval of 1?
+<<Change Axis Resolution,cache.lazy=TRUE,echo=TRUE,fig.height=5>>=
+graph1 <- graph + 
+scale_x_continuous(
+                   breaks = seq(0,thirdQuartile,1)
+                  )  ## change the resolution of the
+## x-axis to interval of 1
+graph1
+@
+
+\begin{DIY}{Homework}
+\noindent Generate a box plot for the same data and with the same zoomed in view as the barplot
+\end{DIY}
+
+<<Zooming Into BoxPlot,cache.lazy=TRUE,echo=FALSE>>=
+graph <-  ggplot(cleansedBusiness) ## add data to the viz environment
+base_graph <- graph + 
+aes( x = c("review_count"), ## Since we intend to generate a box pot 
+## on one variable, there are no elements to be mapped to the x axis. 
+## However geom_boxplot() requires a mapping to the x axis. We 
+## circumvent this by mapping a char element to the x axis
+     y = cleansedBusiness$review_count
+   ) +
+geom_boxplot( outlier.color = "red" ) +  
+## change the colour of the outlier points  
+ggtitle( "Distribution of Review Count ",
+         subtitle = "A Zoomed in Boxplot" ) + 
+xlab("Status") 
+graph2 <- base_graph + 
+ylab( "Review Count" ) + 
+coord_cartesian(ylim = 
+                     c(0,thirdQuartile)
+               ) 
+##gridExtra::grid.arrange(graph1,graph2,nrow=2)
+@
+
+
+\newpage
+\subsection{Generating Stacked Barplot and Dodged Barplot}
+\noindent \textbf{\underline{Question}}: What is the distribution of reviews grouped by ratings?
+
+<<Aesthetics Mapping,cache.lazy=TRUE,echo=TRUE,fig.height=10>>=
+graph    <-  ggplot(cleansedBusiness) ## Attach data to ggplot 
+base_graph <- graph + 
+aes(x = 
+      cleansedBusiness$review_count ## set the aesthetics by mapping 
+## the  review count to the x axis
+    ) +
+coord_cartesian( 
+            xlim = c(0,thirdQuartile) ## scale the x axis by limiting 
+##it to show values only till the third quartile
+             )  + 
+scale_x_continuous(
+           breaks = seq(0,thirdQuartile,1) ## change the resolution of 
+## the x-axis to interval of 1
+           ) +
+xlab("Reviews") + ylab("Frequency") ## add titles to the coordinate axes
+graph1 <- base_graph + 
+geom_bar(
+          aes(fill = 
+              as.factor(cleansedBusiness$stars)
+              ## map groups of reviews by stars to the aesthetics of 
+             ) ## fill colour in segments of the bar plot by the  
+              ## size of each group 
+       )  +
+## By default the bar plot is a stacked barplot 
+ggtitle( "Distribution of Review Count Per Rating",
+         subtitle = "A Zoomed In Stacked Barplot Per State"
+       ) ## add titles and subtitles
+graph2 <- base_graph + 
+geom_bar(
+         aes(fill = 
+                as.factor(cleansedBusiness$stars)
+            ),
+         position = "dodge" ## change the position argument of geom_bar() 
+## to create a dodged bar plot where the height of each bar is 
+## size of each   group 
+        ) +
+ggtitle( "Distribution of Review Count Per Rating",
+        subtitle = "A Zoomed In Dodged BarPlot Per State") 
+gridExtra::grid.arrange(
+              graph1 + labs(fill = "Rating"),
+              graph2 + labs(fill = "Rating"), ##The labs() function 
+## sets the labels of the plot. Note that we set the argument fill to  
+## the label name as that is the same argument we have used in aes().
+              nrow = 2
+            )  ## generate both plots together. The nrow parameter 
+## specifies the row-wise split of the visual environment. 
+@
+
+\begin{DIY}{Warning}
+\begin{itemize}
+  \item \noindent Note the outlier$.$color parameter that is set and passed to geom\textunderscore boxplot
+  \item \noindent Note the use of \textbf{aesthetic mapping} when aes() is passed as an argument to geom\textunderscore bar()
+  \item \noindent Node the use of labs() to set the legend of the plot
+\end{itemize}
+\end{DIY}
+
+\begin{DIY}{Think}
+\noindent  What would be the outcome if we used geom\textunderscore histogram() instead of geom\textunderscore bar() 
+\end{DIY}
+
+\begin{DIY}{Think}
+\noindent  Why did we pass the argument \emph{fill} to the labs() function. What would be the outcome if we passed \emph{colour} instead?
+\end{DIY}
+
+\begin{DIY}{Homework}
+\noindent Read the help manual for grid$.$arrange() function.
+\end{DIY}
+
+\newpage
+\subsection{Merging Data Frames}
+\noindent \textbf{\underline{Question}}: How can we create a data frame of businesses in top10 categoriesm, having an additional attribute called "category"?
+<<cache.lazy=TRUE,echo=TRUE>>=
+countPerCategory <- aggregate( category$category , 
+                               by = list(category$category), 
+                               FUN = length
+                              ) ## group the categories in the category 
+##data setby their count
+names(countPerCategory) <- c("category","count")
+## add names to the resulting data frame
+top10Categories <- head(
+                        countPerCategory[
+                        order(countPerCategory$count,
+                              decreasing = TRUE),
+                        ## order the countPerCategory data frame in
+                        ## decreasing order
+                       ],
+                       n=10 ## list only the top 10 elements in the 
+                       ## sorted data frame
+                      )
+businesses_top10Categories <- 
+category[
+          category$category 
+          %in% 
+          top10Categories[,1], ## search for matching category 
+          ## in the category dataframe and list all   
+          ## matching entries in category
+      ]
+
+businesses_top10Merged <- merge( cleansedBusiness,
+                          businesses_top10Categories,
+                          by.x = "id",by.y = "business_id"
+                        )
+## merging two data frames  by business id
+@
+
+\begin{DIY}{Homework}
+\noindent Read the help manual for merge() function.
+\end{DIY}
+
+\newpage
+\subsection{Generating a \textbf{\emph{Densityplot}}}
+\noindent \textbf{\underline{Question}}: What is the distribution of ratings for each of the top 10 most frequent categories?
+
+<<cache.lazy=TRUE,echo=TRUE,warning=FALSE,fig.height=9>>=
+graph <- ggplot(businesses_top10Merged) ## attached the merged dataframe 
+## to the viz environment. This new new data frame contains only businesses
+## belonging to the top 10 categories and has an additional column called 
+## category
+base_graph <- graph + 
+aes( x = businesses_top10Merged$stars ## map the attrbute stars to the 
+     ## x axis
+   )  + 
+xlab("Ratings") + 
+ylab(" Normalized Frequency") + 
+ggtitle("Distribution of Ratings Per Frequent Category",
+        subtitle = "A Histogram")
+## added guides to the visualization
+graph1 <- base_graph + 
+geom_histogram(
+                 aes(
+                      y = ..count.. / sum(..count..), 
+                      ## geom_histogram() contains an outcome variable 
+                      ## called count "..count.." tells geom_histogram()
+                      ## to refer to its own outcome variable oand not treat 
+                      ## count as a user defined variable. Here, we are mapping 
+                      ## the frequency of each element in the x-axis to y-axis 
+                      fill = businesses_top10Merged$category
+                      ## groups the y-values by category and maps it to the 
+                      ## the aesthetics of filling colour in 
+                      ## segments of the plot by the  size of
+                      ## each group
+                    )
+              ) + 
+labs( fill = "Categories" )  #The labs() function sets 
+## the labels of the plot. Note that we set the argument fill to  
+## the label name as that is the same argument we have used in aes().
+graph2 <- base_graph + 
+geom_density(
+              aes(color =
+                    as.factor(businesses_top10Merged$category)
+                ) ## groups the y-values by category and maps it to the 
+                  ## the aesthetics of colouring each 
+                  ## density function by category. 
+           ) + 
+ ##the density plot based on the top10 categories
+labs( color = "Categories" ) ##setting the label
+## to categories. Please note the use setting of the 
+## color aesthetics since we did the same in geom_density
+gridExtra::grid.arrange(
+                        graph1 ,graph2, 
+                       nrow = 2)## generate both plots together. 
+## The nrow parameter specifies the row-wise split 
+## of the visual environment. 
+@
+
+\begin{DIY}{Think}
+\noindent Note that for geom\textunderscore density() we map the "color" aesthetics instead of the 
+"fill" aesthetics. Try mapping the "fill" aesthetics instead. What do you observe?
+\end{DIY}
+
+\subsection{Smoothing Density Plots}
+\noindent \textbf{\underline{Question}}: How does the density estimate change under different smoothing parameters?
+<<Faceted Density Plot,cache.lazy=TRUE,echo=TRUE,fig.height=10>>=
+base_graph + geom_line( stat = "density" ) + ## geom_line() connects the 
+## data in their order along the x-axis. Moreover setting the stat argument 
+## tells ggplot to create a density plot
+geom_line( stat = "density", colour = "red", adjust = 0.5 ) + ## the adjust 
+## parameter sets the smoothing factor of the density estimate
+geom_line( stat = "density", colour = "green", adjust = 1.5 ) + 
+geom_line( stat = "density", colour = "blue", adjust = 0.75 ) +  
+geom_line( stat = "density", colour = "yellow", adjust = 1.75 ) +     
+facet_grid(
+            as.factor( businesses_top10Merged$category ) ~ . 
+            ## generates a density plot per category
+          ) +
+labs( caption = "Black(adjust = 1); Red(adjust = 0.5); 
+                Green(adjust = 0.5); Blue(adjust = 0.5); 
+                Yellow(adjust = 0.5)"
+    )  ## adds a caption to the plot 
+@
+
+\subsection{Combining Multiple Plots}
+\subsubsection{Centering and Scaling the Data}
+\label{sec:centering}
+\begin{HIGHLIGHT}
+\par\noindent{
+{\centering{\textbf{\emph{\Large $\frac{X - \mu} {\sigma}$}}} \\} 
+\noindent where $X$ is an observation in the dataset, $\mu$ and $\sigma$ are the mean and standard deviation respectively.
+}
+\end{HIGHLIGHT}
+<<cache.lazy=TRUE,echo=TRUE>>=
+centered <- ( businesses_top10Merged$stars  - 
+                mean( businesses_top10Merged$stars )
+              ## compute the difference between each value in the stats
+              ## attrbute and its mean
+             ) / sd( businesses_top10Merged$stars ) ## divide the difference
+            ## by the standard deviation of stars  
+businesses_top10Merged <- data.frame( businesses_top10Merged ,
+                                centered_ratings = centered )
+@
+
+
+\begin{DIY}{Homework}
+\noindent Try centering the review attribute and generate two boxplots ,arranged side by side. The first boxplot should be on the uncentered review counts while the second boxplot
+should be on the centered review counts. Explain your observation.
+\end{DIY}
+
+\noindent \textbf{\underline{Question}}:What is the distribution of Ratings once it has been centered?
+<<Centering Ratings,cache.lazy=TRUE,echo=TRUE,fig.height=5>>=
+graph <- ggplot( businesses_top10Merged )
+graph1 <- graph + 
+aes( x = businesses_top10Merged$centered_ratings ,
+     ## map centered_rating attribute to the x-axis 
+     y = ..density.. ##map the density variable of 
+     ## geom_density() to the y-axis 
+   ) + 
+geom_histogram(aes( y = 
+                       ..count.. / sum(..count..) 
+                    ## count is the computed variable of 
+                    ## geom_histogram()
+                  )
+              ) + 
+geom_density( adjust = 4 ) + ## adjust the smoothness 
+## of the density plot
+xlab( "Centered Ratings" ) + ylab( "Density" ) + 
+ggtitle( "Distribution of Scaled Ratings" )  ## add
+## guides to the plot
+graph1
+@
+
+\subsection{Generating a \emph{\textbf{Columnplot}}}
+\noindent \textbf{\underline{Question}}:What is the distribution of data Ratings per top 10 category, once it has been centered?
+<<Column Plot,cache.lazy=TRUE,echo=TRUE,fig.height=5>>=
+rating_categorization <- ifelse(
+                            businesses_top10Merged$centered_ratings > 0,
+                            "Above","Below")
+## Note the use of the ifelse statement, which checks if the 
+## centered ratings are above or be low 0 and creates a vector
+## of containing "Above" / "Below"
+businesses_top10Merged <- data.frame(businesses_top10Merged,
+  rating_categorization = 
+          rating_categorization ) ## add the new attribute to
+## the business_top10Merged data frame
+graph <- ggplot(businesses_top10Merged)
+graph + aes(x = as.factor(
+                           businesses_top10Merged$category
+                          ),
+                ## map the x-axis to the category 
+                ## attribute of the businesses_top10Merged
+                ## data frame
+           y =  businesses_top10Merged$centered_ratings )  + 
+                ## map the y-axis to the centered_ratings
+                ## attribute of the businesses_top10Merged df
+geom_col( aes( fill = 
+                as.factor(businesses_top10Merged$rating_categorization)
+             ) ## set the aesthetics mapping to group the business
+          ## categories by whether they are "Above" / "Below".
+        ) +
+theme( axis.text.y = element_blank() ) +
+## Disable the labels on the y-axis 
+labs( fill = "Rating" ) +
+xlab("Category") + ylab("Distribution of Rating") + 
+ggtitle("Distribution of Ratings per Category") ## add guides to the 
+## plot
+@
+
+
+

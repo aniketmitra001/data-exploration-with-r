@@ -1,0 +1,99 @@
+% !Rnw root = Introduction.Rnw
+%==========================
+\section{Why R?}
+%==========================
+\noindent Before delving into the question of \emph{why R?}, let us first take a look at how R fares with respect to to its competitors.The following two plots show the results of two surveys conducted in the year 2017. The first plot shows the result of a similar survey, conducted worldwide, by Kaggle.The second survey was conducted by O'Rielly in Europe and shows the popularity of different tools among data analysts/scientists.As is evident from both plots, R is a highly popular tool among data analysts/scientists.
+
+    % Figure to demonstrate popularity of R in Kaggle surveys
+    \begin{figure}[ht] % Figure to demonstrate popularity of R in O'Rielly surveys
+      \centering
+      \includegraphics[width = 15 cm]{./viz/ext/Kaggle_DS_Tools_Survey.jpeg}
+    \end{figure}
+
+    \begin{figure}[ht] % Figure to demonstrate popularity of R in O'Rielly surveys
+      \centering
+      \includegraphics[width = 15 cm]{./viz/ext/OR_DS_Tools_Survey.jpeg}
+    \end{figure}
+    
+\begin{DIY}{Think}
+\emph{Think like an Analyst:} Criticize the plots in terms of their inadequacy to provide the complete information. Argue, why and how would this lead to drawing of incorrect conclusions. 
+\end{DIY}
+
+\begin{DIY}{Homework}
+Read the reports
+\begin{enumerate}
+  \item \textbf{``European Data Science Salary Survey''} published by O'REILLY in 2017
+  \item \textbf{``The State of Data Science \& Machine Learning''} published by Kaggle in 2017
+\end{enumerate}
+and get yourself acquainted with \emph{stage 5} of the data exploration process.
+\end{DIY}
+
+%================================  
+\subsection{A Brief History of R}
+%================================
+\begin{itemize}
+  \item \textbf{1976}: Statistical programming language S developed at Bell Labs since 1976 (at the same time as UNIX)
+  \item \textbf{1993}: Research project in Auckland, NZ  by R. Gentleman and R. Ihaka
+  \item \textbf{1995}: Released as an open-source software - generally compatible with the ``S'' language
+  \item \textbf{1997}: R core group formed
+  \item \textbf{2000}: R 1.0 released
+  \item \textbf{2004}: First international user conference in Vienna
+  \item \textbf{2013}: R 3.0.0 released
+  \item \textbf{2017}: R at version 3.4.3
+\end{itemize}
+
+\newpage
+%================================
+\subsection{Concepts for Programming with R}
+%================================
+%================================
+\subsubsection{Functional Programming}
+%================================
+\begin{HIGHLIGHT}
+\par\noindent{
+Software in R is written in a \emph{functional style} that 
+emphasizes on \emph{encapsulating computations via functions} thereby allowing the programmer to create \emph{abstractions by separating behavior from implementation}.}
+\end{HIGHLIGHT}
+
+\begin{DIY}{Think}
+If you are given a set of $N$ numbers whose average needs to be computed, think about how would the functional programming approach allow you to achieve abstraction and what would be its benefit?
+\emph{Hint:} Think about how would the computation of average differ when $N$ numbers are given in one go (\textbf{\emph{batched input}}) as opposed to when you get every number one after the other (\textbf{\emph{streaming input}})
+\end{DIY}
+
+%================================
+\subsubsection{Classes and Methods}
+%================================
+\begin{HIGHLIGHT}
+\par\noindent{
+\emph{``Functions in R return objects'}'. Therefore any kind of \textbf{\emph{data in R is always an object}}. While functions facilitate abstraction by encapsulating implementation of computation, \emph{classes encapsulate objects}. \emph{Methods in R knit together functions and classes}.   
+}
+\end{HIGHLIGHT}
+%================================
+\subsubsection{Data Frames}
+%================================
+\begin{HIGHLIGHT}
+\par\noindent{
+A \emph{data frame} is organization of data as observations (rows) and attributes (columns). Data frames are one of the predominant data structures in R. Moreover, they are synonymous with the tabular representation of data as is found in spreadsheets and relational database systems. Such similarity in representation of data enables seamless integration between R and most spreadsheets and RDBMS systems. 
+}
+\end{HIGHLIGHT}
+%================================
+\subsubsection{Ecosystem}
+%================================
+\begin{HIGHLIGHT}
+\par\noindent{
+R is an open-source software, thereby providing access to source code sufficient to generate a working version of the software. R is distributed under a version of GPL (Gnu Public License). An effect of this is that R has a thriving community of contributors and active users. Users, seek out existing implementation of data analysis/modeling techniques from a repository called \textbf{\emph{CRAN}} (\textcolor{cyan}{\url{https://cran.r-project.org/}}). When they do not find an existing implementation that suits their needs, they create their own implementations, \emph{package} these implementations and contribute them back to CRAN. As a result of this CRAN today boasts a total of 12000+ packages. Please see the plot below that shows the growth in number of CRAN packages over time. This has resulted in R being unparalleled in the number of options it provides for data analysis. Moreover, R is the primary tool used for statistical research (and has been so for 20 years). Therefore, when new methods are developed, they are not just published as a paper - they are also published as an R package. This means R is always on the cutting edge of new technologies. Furthermore, R was designed as an interface language - a means to present a consistent language interface for algorithms written in other languages. Many packages work by providing R language bindings to other open-source software, making R a convenient hub for all kinds of algorithms and methods.     
+}
+\end{HIGHLIGHT}
+
+\begin{figure}[ht] % Figure to demonstrate growth in number of CRAN packages over time
+      \centering
+      \includegraphics[width = 10 cm]{./viz/ext/numberofCRANpackages_over_Time.jpeg}
+    \end{figure}
+
+\begin{DIY}{Think}
+Did you notice the sudden discontinuity in the curve around the year 2013? Can you think of what might have caused this?
+\end{DIY}
+
+\begin{DIY}{Think}
+Argue \textbf{\emph{Why R}} satisfies \emph{the prime directives} and should therefore be our tool of choice for our mission of data exploration
+\end{DIY}

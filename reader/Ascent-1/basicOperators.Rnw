@@ -1,0 +1,110 @@
+% !Rnw root = Introduction.Rnw
+%===============================
+\section{Operators}
+%===============================
+\begin{HIGHLIGHT}
+\par\noindent{
+In R, an operator is a function which can take one argument (unary operator) or two arguments (binary operator).
+Like any function in R, \emph{an operator too has a return type}. 
+}
+\end{HIGHLIGHT}
+
+\subsection{Arithmetic Operators}
+<<>>=
+3 + 2 ## the '+' operator to add two numbers
+3 - 2 ## the '-' operator to substract two numbers
+3 * 2 ## the '*' operator to multiply two numbers
+3 / 2 ## the '/' operator to divide two numbers
+3 ^ 2 ## the '^' operator to calculate exponent 
+3 %% 2 ## the '%%' operator to calculate modulus
+@
+\begin{DIY}{Think}
+What is the return type for arithmetic operators
+\end{DIY}
+
+\begin{DIY}{Think}
+Try using the arithmetic operators '+' and '*' on operands of type logical. Explain your observations
+\end{DIY}
+
+\begin{DIY}{Think}
+Try using the arithmetic operators on operands of type character. 
+\end{DIY}
+
+\subsection{Comparison Operators}
+<<>>=
+3 < 2 ## less than comparison operator  
+3 <= 3 ## less than equal to comparison operator
+3 > 2 ## greater than comparison operator
+3 >= 3 ## greater than equal to comparison operator
+3 == 3 ## equality comparison operator 
+3 != 2 ## inequality comparison operator
+@
+\begin{DIY}{Think}
+What is the return type for comparison operators
+\end{DIY}
+
+\begin{DIY}{Think}
+Try using the comparison operators on strings. Explain your observations
+\end{DIY}
+
+\begin{DIY}{Think}
+Give \emph{real world} examples of when would you need to use the comparison operator on strings
+\end{DIY}
+
+\subsection{Logical Operators}
+<<>>=
+(3 > 2) & (3 >= 2) ## the AND operator 
+(3 > 2) & (3 < 2)
+(3 > 2) | (3 < 2) ## the OR operator 
+!(3 > 2) ##the NOT operator
+@
+\begin{DIY}{Think}
+What are the arguments to logical operators? What is its return type? 
+\end{DIY}
+
+\begin{DIY}{Think}
+Which arithmetic operators can be used as a substitute for the logical operators
+\end{DIY}
+
+\subsection{Special Operators}
+%==================================  
+\subsubsection{Want Help? Use \textbf{?} operator}
+%==================================  
+\noindent The \textbf{?} operator displays help for the topic that follows it.
+<<help operator>>=
+?as.numeric
+@
+
+\noindent Another way of displaying documentation for a topic is by calling the $help()$ function with the topic as its argument. 
+<<help function>>=
+help("~")
+@
+
+%==================================  
+\subsubsection{Want to Write a Formula? Use $\sim$ operator}
+%==================================  
+\begin{HIGHLIGHT}
+\par\noindent{
+R, has its roots in statistical modelling and is extensively used for the purpose of creating data driven models. Therefore, one of the highlights of R is its ability to evaluate and process expressions written in the form of formulas. R, facilitates this with the $\sim$ operator. The following example shows how you can write an equation of the form $y=x^2$    
+}
+\end{HIGHLIGHT}
+<<>>=
+y ~ x^2 
+class(y ~ x^2)
+@
+%==================================  
+\subsubsection{Want to Assign a Value? Use $<-$ operator}
+%==================================  
+\noindent A number of times we will need to assign the object returned by a function to another object. This is done using the $<-$ operator 
+<<>>=
+result <- 3 + 2
+result
+@
+
+\begin{DIY}{Homework}
+The $<-$ operator can be used for both \emph{assignment} and \emph{replacement} expressions. Give a few examples wherein you would replace an object of a certain type with an object of another type.
+\end{DIY}
+
+\begin{DIY}{Think}
+Explain how the \emph{dynamic typing} feature of R is evident here. 
+\end{DIY}

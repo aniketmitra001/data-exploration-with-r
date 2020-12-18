@@ -1,0 +1,51 @@
+% !Rnw root = Introduction.Rnw
+\newpage
+%===============================
+\section{Functions}
+\label{sec:functions}
+%===============================
+\begin{HIGHLIGHT}
+\par\noindent{
+{\centering\textbf{function(arguments) body} \\}
+}
+\end{HIGHLIGHT}
+\noindent \textbf{\underline{Question}}: How can we split the "date" attribute into "day of week", "hour of day" and "minutes" respectively?
+<<splitFunction,eval = FALSE>>=
+## a generic splitting function that accepts as arguments
+## - an input of type characer that is to be split 
+## - the delimiter for day
+## - the delimiter for time
+## returns : a list of the form 
+##           [<day of week>, <hour of day>, <minute>]
+getDOW_HOD <- function(dateString,dowSplitter = "",timeSplitter = ""){
+            splitValues <- strsplit(dateString,split = dowSplitter)
+            dow <- splitValues[[1]][1]
+            HH_MM_split <- strsplit(splitValues[[1]][2],
+                                    split = timeSplitter)
+            hod <- as.numeric(HH_MM_split[[1]][1])
+            mod <- as.numeric(HH_MM_split[[1]][2])
+            return(list(dayOfWeek = dow,
+                        hourOfDay = hod,
+                        minute = mod))
+}
+
+## for every elment in checkin\$date apply the 
+## function getDOW_HOD
+result <- lapply(checkin$date,
+                 getDOW_HOD,
+                 dowSplitter = '-',timeSplitter = ':'
+                )
+@
+
+\begin{DIY}{Think}
+\noindent Read the help manual for \textbf{\emph{lapply()}}. Try using \textbf{\emph{apply()}} instead of \textbf{\emph{lapply()}}.
+\end{DIY}
+
+\begin{DIY}{Warning}
+\textcolor{red}{The reader is urged to work on the following exercise!}
+\end{DIY}
+
+\begin{DIY}{Homework}
+\noindent \textcolor{red}{Write a R function that:} Given a category and time of week e.g (weekday/weekend),(morning/evening), the function should compute the number of checkins per state. Moreover, the function should also check if there exists a relationship between the rating of a business and the number of checkins 
+The function should also generate plots that visualize the results.
+\end{DIY}

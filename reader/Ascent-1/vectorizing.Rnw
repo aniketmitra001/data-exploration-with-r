@@ -1,0 +1,83 @@
+% !Rnw root = Introduction.Rnw
+\newpage
+\subsection{Vectorizing}
+\begin{HIGHLIGHT}
+\par\noindent{
+\emph{Computing} means applying an operator or a set of operators, on objects.
+}
+\end{HIGHLIGHT}
+
+\begin{HIGHLIGHT}
+\par\noindent{
+\textbf{\emph{Vectorizing}} means \emph{computing} on a collection of objects (\emph{vectors}) instead of computing on each object. Over the history of R, there has been a lot of discussion of what is variously called "avoiding loops", "vectorizing computations", or "whole-object computations", in order to improve the efficiency of computations. Operators, when applied to vectors means that the operator is applied to each pair of object in both vectors. However, \emph{the element wise operation is taken care of by the low level implementation of R}, and is conveniently hidden from the user.
+}
+\end{HIGHLIGHT}
+
+\subsubsection{Vectorizing with Arithmetic Operators}
+<<>>=
+options(digits = 3)
+X<-seq(1,10) ## generate a sequence of numbers from 1 to 10
+Y<-seq(11,20) ## generate a sequence of numbers from 11 to 20
+X+Y  ## Addition of two vectors
+X-Y  ## Difference between two vectors
+X*Y  ## Multiplication of two vectors
+X/Y  ## Division of two vectors
+exp<-rep(2,10) ##create a vector of 10 two's 
+X^exp  ## Squaring a set of numbers 
+X%%Y  ## Finding modulus of two vectors 
+@
+
+\begin{DIY}{Homework}
+ Try adding the vectors X and Y as shown in the figure
+ \includegraphics[width=7 cm]{./viz/ext/shiftAndAdd.jpeg}
+ 
+ Note that you are allowed to use only one arithmetic operator
+\end{DIY}
+
+\begin{DIY}{Homework}
+Given vector X and Y, compute $X^2$ without using the $\wedge$ operator
+\end{DIY}
+
+\subsubsection{Vectorizing with Comparison Operators}
+<<>>=
+X<-seq(1,10) ## generate a sequence of numbers from 1 to 10
+Y<-seq(11,20) ## generate a sequence of numbers from 11 to 20
+X > Y    ##check if X is greater than Y
+Y[5]<-X[5] ##set the 5th element of Y equal to the 5th element of X
+X == Y ##check for equality between X and Y
+@
+
+\begin{DIY}{Think}
+What is the return type of applying comparison operators on vectors
+\end{DIY}
+
+\subsubsection{Are All Values True?}
+<<>>=
+X<-seq(1,10) ## generate a sequence of numbers from 1 to 10
+Y<-seq(11,20) ## generate a sequence of numbers from 11 to 20
+all(Y > X)
+Y[5]<-X[5] ##set the 5th element of Y equal to the 5th element of X
+all(Y == X)
+@
+
+\subsubsection{Which Values Are True?}
+<<>>=
+X<-seq(1,10) ## generate a sequence of numbers from 1 to 10
+Y<-seq(11,20) ## generate a sequence of numbers from 11 to 20
+which(Y > X)
+Y[5]<-X[5] ##set the 5th element of Y equal to the 5th element of X
+which(Y == X)
+X[X==Y] ##return the element of X that is equal to Y.
+@
+
+\begin{DIY}{Homework}
+Using one arithmetic operation on Y, transform Y in a way such that $all(X==Y)$ returns TRUE
+\end{DIY}
+
+\begin{DIY}{Homework}
+Using one arithmetic operation on Y, transform Y in a way such that $all(X<Y)$ returns TRUE
+\end{DIY}
+
+\begin{DIY}{Homework}
+Transform only the values of Y that are even numbers, in such a way that they are all less than X. Then compare them with their corresponding values in X to verify if they are less. Try to do this in as few steps as possible.
+\end{DIY}

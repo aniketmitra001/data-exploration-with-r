@@ -1,0 +1,58 @@
+% !Rnw root = Introduction.Rnw
+%===============================
+\section{Coercion}
+%===============================
+\begin{HIGHLIGHT}
+\par\noindent{
+{\centering\textbf{\emph{logical, integer, numeric, character}} \\}
+\vspace{\baselineskip}
+\noindent An ordering of data types from simple to complex. \emph{Coercion} is the conversion from one type to another. However, coercion from any type to another is neither possible nor valid. The general rule for coercion is: \emph{Coercion from a a simple type to a more complex type is valid}
+}
+\end{HIGHLIGHT}
+\subsubsection{The ``is'' and ``as'' methods}
+The \emph{is} method can be used to test whether an object is from a given class.
+
+\noindent The \emph{as} method can be used to coerce an object from one class to another.
+\subsection{Coercion between Boolean and Numbers}
+<<>>=
+is.logical(TRUE) ##check if the  data is of type logical
+as.numeric(TRUE) ##coerce from logical to numeric
+is.numeric(10) ##check if the data is of type numeric
+as.logical(10) ##coerce form numeric to logical. 
+##Any number that is not equal to 0 will be coerced to FALSE  
+as.logical(0) ##coerce from numeric to logical. 
+##Any number that is equal to 0 will be coerced to TRUE 
+as.logical(0.013) ##coerce from numeric to logical
+@
+\begin{DIY}{Think}
+Give \emph{real world} examples of when would you need to coerce between Boolean and numbers.
+\end{DIY}
+\subsection{Coercion between Boolean and Strings}
+<<>>=
+is.logical(TRUE) ##check if the data is of type boolean
+as.character(TRUE) ##coerce boolean to strings
+is.character("TRUE")  ##check if the data is of type string
+as.logical("TRUE") ##coerce from string to boolean
+as.logical("Data") ##coerce any arbitrary string to logical
+@
+\begin{DIY}{Warning}
+As shown in the last example, R does not prevent the coercion of an arbitrary string to logical. It just generates NA. 
+\end{DIY}
+
+\begin{DIY}{Think}
+Give \emph{real world} examples of when would you need to coerce between Boolean and strings.
+\end{DIY}
+\subsection{Coercion between Numbers and Strings}
+<<>>=
+as.character(1) ## coerce from number to string
+as.character(1.0023) ## coerce from number to string
+as.numeric("1") ## coerce from string to number
+as.numeric("Data") ## coerce from string to number
+@
+\begin{DIY}{Warning}
+Note the difference in output in the last two cases. When a number is passed as a string to $as.numeric()$, it its able to detect the same and correctly coerces it to a number. 
+\end{DIY}
+
+\begin{DIY}{Think}
+Give \emph{real world} examples of when would you need to coerce between Boolean and strings.
+\end{DIY}

@@ -1,0 +1,204 @@
+% !Rnw root = Introduction.Rnw
+\newpage
+%===============================
+\section{Control Structures}
+%===============================
+
+\subsection{The \textbf{\emph{checkin}} dataset}
+\noindent Import the file \emph{\textbf{checkin.csv}} into your R environment. 
+<<cache.lazy=TRUE,echo=FALSE,message=FALSE,warning=FALSE>>=
+checkin <- read_csv("~/Documents/untitled folder 2/data/yelp/checkin.csv")
+@
+
+\subsubsection{Dimension and Attributes}
+\noindent \textbf{\underline{Question}}: What is the dimension of the data and what are the various attributes?
+<<dimCheckins>>=
+dim(checkin)
+##get dimension of the data
+colnames(checkin)
+##get attributes of the data
+@
+
+\subsubsection{Splitting Strings}
+\noindent \textbf{\underline{Question}}: How can we split the checkin date (DayOfWeek-HH:MM) into "day of week" and "time"?
+<<splitdateTime,cache.lazy=TRUE>>=
+checkinTime <- strsplit(checkin$date,split = "-") 
+## split the date string into day of week and time
+@
+
+\begin{DIY}{Homework}
+\noindent Read the help manual of the \textbf{\emph{strsplit()}} function
+\end{DIY}
+
+\begin{DIY}{Think}
+\noindent What is the type of the object "checkinTime"? 
+\end{DIY}
+
+\newpage
+\subsection{The \textbf{\emph{for}} loop}
+\begin{HIGHLIGHT}
+\par\noindent{
+{\centering\textbf{\emph{for(name in range) body}} \\}
+}
+\end{HIGHLIGHT}
+
+\subsubsection{Iterative Vectorization}
+\noindent \textbf{\underline{Question}}: How can we create three vectors for "day of week", "hour of day" and "minutes" respectively?
+<<iterate,cache.lazy=TRUE>>=
+numCheckins <- length(checkinTime) 
+##the length of the list that contains 
+## lists of the form [[<day of week>,<hour of day>,<minute>],..] 
+dow <- vector(mode = "character", length = numCheckins) 
+## a character vector of size = numCheckins
+hod <- vector(mode = "integer", length = numCheckins)  
+## an integer vector of size = numCheckins
+minute <- vector(mode = "integer", length = numCheckins) 
+## an integer vector of size = numCheckins
+index = 1 ##set increment counter to 1
+for (dayTime in checkinTime){ 
+      ## iterateve over each list in the list
+      dow[index]<-dayTime[1]
+      ## extract the first element of the list (day of week)
+      ## and assign it to the corresponding position in dow
+      HH_MM_split <- strsplit(dayTime[2],split = ":") 
+      ## split the second element 
+      ## of the list (HH:MM) into HH and MM which in turn 
+      ##creates a list of lists
+      hod[index] <- as.integer(HH_MM_split[[1]][1]) 
+      ##access the first element (hour)
+      ## of the list of lists  and assign it to the 
+      ##corresponding position in hod
+      minute[index] <- as.integer(HH_MM_split[[1]][2]) 
+      ##access the second element (minute)
+      ## of the list of lists and assign it to the 
+      ##corresponding position in minute
+      index = index + 1 ##increment the value of index
+}
+index = 1 ##reset index to 1
+@
+
+\begin{DIY}{Think}
+\begin{itemize}
+  \item \noindent Explain the meaning of the \textbf{[[]]} in the context of the example
+  \item \noindent What happens if we set the mode of the vectors "hod" and "minute" to \textbf{\emph{numeric}}?
+\end{itemize}
+\end{DIY}
+
+\begin{DIY}{Homework}
+ \begin{itemize}
+  \item \noindent Install the package \textbf{rbenchmark} and read the help manual for the \textbf{\emph{benchmark()}} function.
+  \item \noindent Try the above example without initializing the length/type of the vector. Benchmark the same against the given example. Explain why do you see a difference in the execution time
+  \item \noindent Do not reset the index value to 1 at the end of the example and run the code block twice. Observe the size of the vectors "dow", "hod" and "minute". Explain your observation.  
+\end{itemize}
+\end{DIY}
+
+\subsection{The \textbf{\emph{if}} statement}
+\label{sec: conditionalStatements}
+\begin{HIGHLIGHT}
+\par\noindent{
+{\centering\textbf{\emph{if(test) expression1 else expression2}} \\}
+}
+\end{HIGHLIGHT}
+
+\subsubsection{Conditional Assignment}
+\noindent \textbf{\underline{Question}}: How can we map days of week to their position in the week? e.g. Sunday = 0, Monday = 1, $....$
+<<condition,cache.lazy=TRUE>>=
+pow <- vector(mode = "integer", length = length(dow))
+## create a vector of type integer where the length is 
+## equal to the number of elements in the dow
+index = 1 ## set the increment counter to 1
+for(item in dow){ ##iterate over element of the the 
+  ## day of week vector
+       if (item == "Sunday"){
+         pow[index] <- 0 ## if the day of week is sunday assign
+         ## value 0 to the corresponding position in the pow vector
+      }  
+      if (item == "Monday"){
+         pow[index] <- 1 ## if the day of week is monday assign
+         ## value 1 to the corresponding position in the pow vector
+      } 
+      else if (item == "Tuesday"){
+         pow[index] <- 2 ## if the day of week is tuesday assign
+         ## value 2 to the corresponding position in the pow vector
+      }
+      else if (item == "Wednesday"){
+         pow[index] <- 3 ## if the day of week is wednesday assign
+         ## value 3 to the corresponding position in the pow vector
+      }
+      else if (item == "Thursday"){
+         pow[index] <- 4 ## if the day of week is thursday assign
+         ## value 4 to the corresponding position in the pow vector
+      }
+     else if (item == "Friday"){
+         pow[index] <- 5 ## if the day of week is friday assign
+         ## value 5 to the corresponding position in the pow vector
+     }
+     else if (item == "Saturday"){
+         pow[index] <- 6 ## if the day of week is saturday assign
+         ## value 6 to the corresponding position in the pow vector
+     }
+     index = index + 1 ##increment the value of index
+}
+index = 1  ##reset index to 1
+@
+
+
+<<cache.lazy=TRUE,echo=FALSE,message=FALSE,warning=FALSE>>=
+checkins <- data.frame (business_id =  checkin$business_id,
+                        day_of_week = dow, 
+                        position_of_week = pow,
+                        hour = hod, minute = minute,count = checkin$count)
+@
+
+
+\begin{DIY}{Homework}
+ \begin{itemize}
+  \item \noindent How can you achieve the same result without using the \emph{for loop} and \emph{if statement} at all! \textcolor{red}{Hint:} try the \textbf{\emph{which()}} function. Benchmark your implementation (without the control statements) against the example. Do you notice a difference in performance? Explain your observation.
+  \item \noindent Create a data frame named \emph{checkins} that has the following attributes
+\end{itemize}
+\end{DIY}
+
+ <<checkins>>=
+  colnames(checkins)
+  @
+
+\subsubsection{Validation}
+\noindent \textbf{\underline{Question}}: How can we check for correct assignment of position to day of week?
+<<dayOfWeekByPosWeek>>=
+table(checkins$day_of_week,checkins$position_of_week)
+##co-occurence count of day of week and position
+sum(table(checkins$day_of_week,checkins$position_of_week)) == 
+  dim(checkins)[1]
+##check if every day of week has been mapped to one position
+@
+
+\begin{DIY}{Think}
+\noindent Explain the output of the code snippet 
+\end{DIY}
+
+\begin{DIY}{Homework}
+\noindent Compute the total number of checkins aggregated by hour and day of week. Plot the same 
+\end{DIY}
+
+\newpage
+\subsubsection{Conditional Distribution}
+\noindent \textbf{\underline{Question}}: What is the distribution of checkins over each day of the week?
+<<checkinsOverWeek>>=
+summary(checkins$count)
+##generate summary statistic for checkin count
+boxplot(checkins$count ~ checkins$day_of_week,
+        main = "Distribution of checkins over days of week", 
+        xlab = "day of week",ylab = "Number of checkins")
+##distribution of count , given, day of week
+@
+
+\begin{DIY}{Think}
+\noindent Explain the plot
+\end{DIY}
+
+\begin{DIY}{Homework}
+\begin{itemize}
+  \item \noindent Regenerate the plot but only for checkins $\geq$ 3rd Quartile
+  \item \noindent Generate a plot that shows the relationship between hour of day and number of checkins. Explain if you notice a relationship between the two
+\end{itemize}
+\end{DIY}

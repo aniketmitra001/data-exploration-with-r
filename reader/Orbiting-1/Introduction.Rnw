@@ -1,0 +1,27 @@
+% !Rnw root = main.Rnw
+%===============================
+\section{The Grammar of Graphics}
+%===============================
+
+\begin{HIGHLIGHT}
+\par\noindent{
+\noindent \textbf{\emph{The Grammar of Graphics}} provides a formal, structured perspective on how to describe data graphics. Therefore, the grammar of graphics is a \emph{mapping from 
+properties of data to visual properties of graphics}. The data properties are typically numerical or categorical values, while the visual properties include the \emph{x} and \emph{y} position of points, colors of lines, heights of bars and so on.
+}
+\end{HIGHLIGHT}
+
+\noindent Over the past years, \textbf{\emph{ggplot2}} has become the de-facto package for data visualization in R. In this chapter, we will familiarize the reader with the basic concepts of ggplot2 and show basic data visualization techniques using the same. For a more detailed and thorough treatment please refer to the following book. Moreover, a large number of examples using ggplot2 can be found at \textcolor{cyan}{\url{http://r-statistics.co/Complete-Ggplot2-Tutorial-Part1-With-R-Code.html}}. Furthermore, a cheatsheet for ggplot2() is available in the RStudio IDE and can be found at the end of this chapter as well.    
+
+\begin{figure}[ht]
+      \centering
+      \includegraphics[width = 6 cm]{./viz/ext/RCookbook.jpeg}
+\end{figure}
+
+<<ggplot2,child='./ggplot2.Rnw'>>=
+@
+
+
+<<statModelling,child='./statisticalModelling.Rnw'>>=
+@
+
+

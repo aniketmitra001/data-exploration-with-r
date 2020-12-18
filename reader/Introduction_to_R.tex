@@ -1,0 +1,229 @@
+\documentclass[15pt]{book}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,width=150mm,top=25mm,bottom=25mm,bindingoffset=6mm]{geometry}  
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage[table]{xcolor}
+\usepackage{url} 
+\usepackage{float}    % for fig.pos='H'
+\usepackage{fancyhdr}
+\usepackage{color}
+\usepackage[table]{xcolor}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{array}  
+\usepackage{wrapfig}
+\usepackage{longtable}
+\usepackage{lscape}
+\usepackage{framed}
+\usepackage[english]{babel}
+\usepackage{lscape}
+\usepackage{rotating}
+\usepackage{mdframed}
+\usepackage{emptypage}
+
+% \pretitle{\begin{center}\Huge\bfseries}
+% \posttitle{\end{center}\vskip 0.5em}
+% \preauthor{\begin{center}\Large\ttfamily}
+% \postauthor{\end{center}}
+% \predate{\par\large\centering}
+% \postdate{\par}
+% 
+% 
+% %SetFonts
+% 
+% %SetFonts
+% 
+
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[RO,LE]{Gap Analysis for Energy Network Design}
+\fancyfoot{}
+\fancyfoot[LE,RO]{\thepage}
+\fancyfoot[LO,CE]{\rightmark}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\setlength{\parskip}{1em}
+
+\title{\Huge{Data Analyis with R}}
+\author{\Large{A TO Z ACADEMY} \\
+            {info@atozacademy.nl}
+}
+\date{\today}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+\maketitle
+%\thispagestyle{empty}
+%\newpage
+% \SweaveOpts{concordance=TRUE}
+\cleardoublepage
+%===============================
+\chapter*{Course Overview}
+%==============================
+\noindent \textbf{Data Analysis with R} is a 15 hour intensive program wherein the participants will ``learn by doing``. In this regard, two case studies will be shared, which will be prepared from\\ 
+  \begin{itemize}
+    \item  \texttt{\url{https://www.kaggle.com/datasets}}
+  \end{itemize}
+\noindent The idea is that participants apply the techniques that they learn during the first six sessions, on the cases and prepare a presentation of their findings for the last two sessions. Also the participants will be expected to submit their R code before the last two sessions. Each case will require the participants to spend approximately 20-25 hours.\\
+
+%==============================
+  \section*{Course Plan}
+%==============================  
+  \begin{enumerate} 
+    \item \textbf{Introduction to R (3 hours)}
+\noindent In the introduction sessions we will cover the following
+    \begin{itemize}
+      \item Setup R and Introduction to RStudio 
+      \item Reading files in R. Introduction to data frames and basic operation on Data frames 
+    \end{itemize}
+    
+    \item \textbf{Data Processing in R (1.5 hours)} \\
+    
+\noindnet In these sessions we will cover different control structures in R. The participants will learn to write their first ``R function'' and ways to clean, aggregate and transform data \\
+    \item \textbf{Exploratory Data Analysis and Data Visualization in R (3 hours)}
+    
+\noindent In these sessions the participants will learn how to compute summary statistics of data in R, visualize datasets and learn to understand and explain ``the story of the dataset'' \\
+    \item \textbf{Statistical Modelling in R (1.5 hours)}
+    
+\noindent In these sessions, the participants will learn how to build a linear regression model on a multivariate dataset and interpret its results.\\
+    \item \textbf{Case Analysis (6 hours)}
+    
+\noindent In these sessions, the participants will present, analyse and brainstorm on the application of different methods that they have been introduced to in the previous sessions, namely data processing, data exploration, data visualization and predictive modelling to two real world datasets.\\
+  \end{enumerate}
+
+%================================
+%  End of section Course Plan
+%================================
+\cleardoublepage
+%===============================  
+  \section*{The Book}
+%===============================  
+    % add the image of the reference book
+    \begin{figure}[ht]
+      \centering
+      \includegraphics[width = 8 cm]{./viz/ext/book_intro_toR.jpeg}
+    \end{figure}
+
+    %add table for mapping between sessions and book 
+    \begin{center}
+      \begin{tabular}{ |c|c|c| } 
+        \hline
+          \textbf{\large Session} & \textbf{\large Chapters in the Book}  \\
+        \hline   
+          1 &  1, 2, 6.1, 6.2 \\
+        \hline
+          2 & 3, 6.3, 6.4, 6.5, 6.6, 6.7\\
+        \hline  
+          3 &  7 \\
+        \hline
+          4 & 6.8, 6.9, 6.10 \\
+        \hline       
+      \end{tabular}
+    \end{center}
+%==============================
+% End of section book
+%==============================
+
+%================================
+% End of chapter course overview
+%=================================
+
+\cleardoublepage
+%=======================================
+\chapter*{Session 1 - Introduction to R}
+  %==========================
+  \section*{The Mission}
+  %==========================
+  \begin{figure}[ht]
+      \centering
+      \includegraphics[width = 8 cm]{./viz/ext/densityplotIcon.jpeg}
+    \end{figure}
+  {\centering\textbf{\emph{\Huge ``Data Exploration''}} \\}
+  
+  
+  \newpage
+  \textbf{Data Exploration} entails the following actvities:
+  \begin{itemize}
+      \item Formulate meaningful questions
+      \item Organize data in a way to answer the questions
+  \end{itemize}
+
+  %==========================
+  \section*{Why R?}
+  %==========================
+    % Figure to demonstrate popularity of R in O'Rielly surveys
+    \begin{figure}[ht]
+      \includegraphics[width = 5 cm]{./viz/ext/OR_DS_Tools_Survey.jpeg}
+    \end{figure}
+    % Figure to demonstrate popularity of R in Kaggle surveys
+    \begin{figure}[ht]  
+      \includegraphics[width = 5 cm]{./viz/ext/Kaggle_DS_Tools_Survey.jpeg}
+    \end{figure}
+   %================================  
+   \section*{A Brief History of R}
+   %================================
+   %================================
+   \section*{Concepts for Programming with R}
+   %================================
+   %================================
+   \section*{Functional Programming}
+   %================================
+   %================================
+   \section*{Classes and Methods}
+   %================================
+   %================================
+   \section*{Data Frames}
+   %================================
+    
+\end{document}

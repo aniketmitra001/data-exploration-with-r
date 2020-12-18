@@ -1,0 +1,25 @@
+% !Rnw root = main.Rnw
+
+<<UsingR,child='./UsingR.Rnw'>>=
+@
+
+<<basicDataTypes,child='./basicDataTypes.Rnw'>>=
+@
+
+<<Coercion,child='./Coercion.Rnw'>>=
+@
+
+<<basicOperators,child='./basicOperators.Rnw'>>=
+@
+
+<<vectors,child='./vectors.Rnw'>>=
+@
+
+<<vectorizing,child='./vectorizing.Rnw'>>=
+@
+
+<<vectorizing,child='./DataFrames.Rnw'>>=
+@
+
+<<externalIO,child='./externalIO.Rnw'>>=
+@

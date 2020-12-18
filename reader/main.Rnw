@@ -1,0 +1,222 @@
+\documentclass[12pt]{book}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,width=150mm,top=25mm,bottom=25mm,bindingoffset=6mm]{geometry}  
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage[table]{xcolor}
+\usepackage{url} 
+\usepackage{float}    % for fig.pos='H'
+\usepackage{fancyhdr}
+\usepackage{color}
+\usepackage[table]{xcolor}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{array}  
+\usepackage{wrapfig}
+\usepackage{longtable}
+\usepackage{lscape}
+\usepackage{framed}
+\usepackage[english]{babel}
+\usepackage{lscape}
+\usepackage{rotating}
+\usepackage{mdframed}
+\usepackage{emptypage}
+\usepackage{pdfpages}
+\usepackage{titlesec}
+
+
+<<option,echo=FALSE>>=
+opts_knit$set(self.contained=FALSE)
+@
+
+% \pretitle{\begin{center}\Huge\bfseries}
+% \posttitle{\end{center}\vskip 0.5em}
+% \preauthor{\begin{center}\Large\ttfamily}
+% \postauthor{\end{center}}
+% \predate{\par\large\centering}
+% \postdate{\par}
+% 
+% 
+% %SetFonts
+% 
+% %SetFonts
+% 
+
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[RO,LE]{Data Exploration with R}
+\fancyfoot{}
+\fancyfoot[LE,RO]{\thepage}
+\fancyfoot[LO,CE]{\rightmark}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\setlength{\parskip}{1em}
+
+\titleformat{\chapter}{\normalfont\huge}{\thechapter.}{20pt}{\huge\textbf}
+
+\begin{document}
+%\maketitle
+%\thispagestyle{empty}
+%\newpage
+% \SweaveOpts{concordance=TRUE}
+
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\center % Center everything on the page
+ 
+%----------------------------------------------------------------------------------------
+%	HEADING SECTIONS
+%----------------------------------------------------------------------------------------
+
+%\textsc{\LARGE Delft University of Technology}\\[1.5cm] % Name of your university/college
+%\textsc{\Large Master Thesis}\\[0.5cm] % Thesis type
+%\textsc{\Large Faculty Technology, Policy and Management}\\[0.5cm] % Major heading such as course name
+%\textsc{\large Engineering Policy and Analysis}\\[0.5cm] % Minor heading such as course title
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+\HRule \\[0.4cm]
+{ \Huge \bfseries Data Exploration with R}\\[0.2cm]
+%\Large {A Socio Technical Perspective}\\[0.4cm] % Title of your document
+\HRule \\[1.5cm]
+ 
+%----------------------------------------------------------------------------------------
+%	AUTHOR SECTION
+%----------------------------------------------------------------------------------------
+% \begin{minipage}{0.4\textwidth}
+% \begin{flushright} \large
+% \emph{Graduation Committee:} \\
+% Prof.dr.ir.P.M. Herder\\ % Supervisor's Name
+% Dr.ir.P.W. Heijnen\\
+% Dr.ir. Bert Enserink\\
+% \end{flushright}
+% \end{minipage}\\[2cm]
+% 
+% \large \textit{A thesis submitted in fulfilment of the requirements\\ for the degree of Master of Science in}\\[0.3cm] % University requirement text
+% \textit{\Large Engineering and Policy Analysis}\\[2cm]
+% %\textsc{\large Faculty of Technology Policy Management}\\[2cm]
+% %\groupname\\\deptname\\[2cm] % Research group name and department name
+%  
+% % If you don't want a supervisor, uncomment the two lines below and remove the section above
+% %\Large \emph{Author:}\\
+% %John \textsc{Smith}\\[3cm] % Your name
+% 
+
+%----------------------------------------------------------------------------------------
+%	LOGO SECTION
+%----------------------------------------------------------------------------------------
+
+\includegraphics[width=10cm]{./viz/icons/Logo.png}\\[1cm] % Include a department/university logo - this will require the graphicx package
+ 
+%----------------------------------------------------------------------------------------
+
+% %----------------------------------------------------------------------------------------
+% %	DATE SECTION
+% %----------------------------------------------------------------------------------------
+
+%{\large \today}\\[2cm] % Date, change the \today to a set date if you want to be precise
+%\vspace{\baselineskip}
+{\large info@atozacademy.nl}\\[2cm] 
+
+\vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}
+
+\newenvironment{DIY}[1]
+{
+\begin{minipage}[ht]{0.2\linewidth}
+    \ifthenelse{\equal{#1}{Think}}
+      {
+        \includegraphics[width=2\baselineskip]{./viz/icons/Think.png}
+      }
+      {\ifthenelse{\equal{#1}{Homework}}
+        {
+          \includegraphics[width=2\baselineskip]{./viz/icons/Homework.png}  
+        }
+       {
+          \ifthenelse{\equal{#1}{Warning}}
+            {
+              \includegraphics[width=2\baselineskip]{./viz/icons/Warning.png} 
+            }
+            {
+            
+            }
+       }
+      }%
+\end{minipage}%
+\begin{minipage}[ht]{0.75\linewidth}
+}
+{
+\end{minipage}
+}
+
+\newenvironment{HIGHLIGHT}
+{
+\begin{mdframed}[backgroundcolor=cyan!10]
+}
+{
+\end{mdframed}
+}
+
+\cleardoublepage
+%===============================
+\chapter*{Course Overview}
+%==============================
+\input{./CourseOverview/CourseOverview.Rnw}
+
+%===============================
+\tableofcontents
+%===============================
+\cleardoublepage
+\thispagestyle{empty}
+\includegraphics[width = 17 cm]{./viz/ext/Liftoff.jpeg}
+
+\newpage
+%=======================================
+\chapter{The Liftoff}
+%=======================================
+<<Liftoff,child='./Liftoff/Introduction.Rnw'>>=
+@
+\newpage
+\includepdf[pages={1}]{./References/rstudio-ide.pdf}
+
+\cleardoublepage
+\thispagestyle{empty}
+\includegraphics[width = 17 cm]{./viz/ext/Ascent_A.jpg}
+
+\newpage
+%=======================================
+\chapter{The Ascent - PART A}
+%=======================================
+<<AscentA,child='./Ascent-1/Introduction.Rnw'>>=
+@
+
+\cleardoublepage
+\thispagestyle{empty}
+\includegraphics[width = 16 cm]{./viz/ext/Ascent_B.jpeg}
+
+%=======================================
+\chapter{The Ascent - PART B}
+%=======================================
+<<AscentB,child='./Ascent-2/Introduction.Rnw'>>=
+@
+
+\newpage
+\includepdf[pages={1}]{./References/yelp_dataset_schema.pdf}
+
+\cleardoublepage
+\thispagestyle{empty}
+\includegraphics[width = 16 cm]{./viz/ext/Orbit.jpeg}
+%=======================================
+ \chapter{The Orbiting}
+%=======================================
+<<Orbit1,child='./Orbiting-1/Introduction.Rnw'>>=
+@
+\newpage
+\includepdf[pages={1,2}]{./References/data-visualization-ggplot.pdf}
+
+\end{document}

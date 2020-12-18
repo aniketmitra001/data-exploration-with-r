@@ -1,0 +1,26 @@
+% !Rnw root = Introduction.Rnw
+%===============================
+\section{Using R}
+%===============================
+\begin{HIGHLIGHT}
+\par\noindent{
+R is an \emph{interactive} environment, wherein the users gets immediate feedback (\emph{results}) for their instructions (\emph{expressions}). This is in contrast to programming languages like C++ or Java wherein a set of instructions (the program) has to be created and compiled before the results can be generated.In R, the interaction between the user and the system constitutes an \emph{R Session}. During an R session, the user provides \emph{expressions} to R for doing computations, displaying results, and creating objects for further use. R, first evaluates the expressions for its syntactic correctness and then performs the task, as specified by the expression. We will examine some basic expressions in the following sub-sections.     
+}
+\end{HIGHLIGHT}
+
+At the \emph{console}, the user finds the \textbf{$>$} prompt where the user responds by typing and expression. Hereon, in this section every expression/set of expressions is mentioned in the gray box and is to be issued at the $>$ prompt in the console. Moreover, following the motto of this course ``learn by doing``, the reader is strongly encouraged to try out each of these expressions and \emph{read the corresponding help manual for each expression}. As is evident from the examples shown in this section, expressions are predominantly \textbf{\emph{function calls with a set of arguments}}.
+
+\begin{HIGHLIGHT}
+\par\noindent{
+R, like Python, MATLAB etc is a \emph{dynamically typed language} which means that you won't have to define the type of the variable (which stores your data). As a result, the user can only focus on the \emph{data stored by the variable} rather than having to worry about \emph{how the data is stored in the variable}. This is in stark contrast to \emph{statically typed languages} like C++ and Java.      
+}
+\end{HIGHLIGHT}
+
+\begin{DIY}{Think}
+How does a R \emph{data frame} exemplify the \emph{dynamic typing} feature of R?
+\end{DIY}
+    
+\begin{DIY}{Warning}
+The dynamic typing feature of R  provides great flexibility but at what cost?
+\end{DIY}
+

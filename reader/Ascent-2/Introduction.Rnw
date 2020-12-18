@@ -1,0 +1,18 @@
+% !Rnw root = main.Rnw
+
+<<The Dataset,child='./DataSet.Rnw'>>=
+@
+
+<<DataManipulation,child='./DataManipulation.Rnw'>>=
+@
+
+%<<DataVisualization,child='./DataVisualization.Rnw'>>=
+%@
+
+<<ControlStructures,child='./ControlStructures.Rnw'>>=
+@
+
+<<Functions,child='./Functions.Rnw'>>=
+@
+
+

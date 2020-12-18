@@ -1,0 +1,348 @@
+% !Rnw root = Introduction.Rnw
+%===============================
+\section{Data Wrangling}
+%===============================
+
+\begin{HIGHLIGHT}
+\par\noindent{
+\noindent \textbf{\emph{Data Wrangling}} sometimes referred to as data munging, is the process of transforming and mapping data from its raw form to a form that is suitable for analysis.
+Exploring data for new insights is a gradual, iterative process. Occasionally we get a sudden insight, but for the most part we try something, look at the results, reflect a bit, and then try something slightly different.
+}
+\end{HIGHLIGHT}
+
+\noindent In this section, we will learn about ways to  \textbf{(a)} Clean \textbf{(b)} Transform and \textbf{(c)} Aggregate data. 
+Therefore, we will formulate different questions that we wish to ask on the data and write R expressions that will enable us to answer those questions.
+
+\subsection{The \textbf{\emph{business}} dataset}
+
+\noindent Import the file \emph{\textbf{business.csv}} into your R environment. 
+<<cache.lazy=TRUE,echo=FALSE,message=FALSE,warning=FALSE>>=
+library(readr)
+business <- read_csv("~/Documents/untitled folder 2/data/yelp/business.csv")
+@
+
+\subsubsection{Dimension and Attributes}
+\noindent \textbf{\underline{Question}}: What is the size of the data?
+<<dimension>>=
+dim(business)
+##get the dimension of the data
+@
+
+\noindent \textbf{\underline{Question}}: What are the attributes?
+<<attributes>>=
+colnames(business)
+##get the attributes of the data
+@
+
+\newpage
+\subsubsection{Uni-variate Distribution}
+\noindent \textbf{\underline{Question}}: What is the distribution of ratings in the data?
+<<boxplotStars>>=
+boxplot(business$stars,main = "Distribution of Ratings")
+@
+
+\begin{DIY}{Think}
+\noindent Explain the plot
+\end{DIY}
+
+\begin{DIY}{Homework}
+\noindent What is the distribution of review count in the data?
+\end{DIY}
+
+\newpage
+\subsubsection{Sorting and Selection}
+\noindent \textbf{\underline{Question}}: Which are the top 10 business by rating? 
+<<getTopRestaurants,eval=FALSE>>=
+head(business[order(business$stars,
+                    decreasing = TRUE
+                    ),
+              c("name","state","stars")
+              ],
+     n=10)
+## sort the data by number of  stars and get the top 10 businesses
+@
+
+\begin{DIY}{Homework}
+\noindent Which are the bottom 10 businesses by review count?
+\end{DIY}
+
+\subsubsection{Aggregation}
+\noindent \textbf{\underline{Question}}: What is the number of business entities per state? 
+<<getCountPerCity,eval=FALSE>>=
+countPerState <- aggregate(business$state,
+                           by=list(business$state),
+                           FUN=length
+                           )
+names(countPerState)<-c("state","count")
+View(countPerState)
+##count number of occurences of businesses in each state  
+@
+
+
+\begin{DIY}{Homework}
+\noindent Read the help manual for the \emph{aggregate()} function.
+\end{DIY}
+
+\begin{DIY}{Think}
+\noindent \begin{itemize}
+  \item Why have we passed a \emph{list()} to the \textbf{by} argument? 
+  \item What do you get if you just set $by = business\$state$?
+\end{itemize}
+\end{DIY}
+
+\begin{DIY}{Warning}
+\noindent Take a close look at the values in the \textbf{countPerState\$state} column. Do you notice any irregularities?
+\end{DIY}
+
+\newpage
+\subsubsection{Filtering}
+\noindent \textbf{\underline{Question}}: How can we filter out incorrect values? 
+<<filterNoisyState,eval=FALSE>>=
+View(countPerState[is.na(
+                         as.numeric(countPerState$state)
+                         ),
+                   ]
+     )
+##filter out the entries that are of type "numeric" 
+@
+
+\begin{DIY}{Think}
+\noindent Explain how are we taking advantage of coercion in the above expression.
+\end{DIY}
+
+\begin{DIY}{Homework}
+\noindent When we count the number of hotels per state, we see that some states are labelled as 'C'. Find the list of all businesses that belong to this state
+\end{DIY}
+
+\begin{DIY}{Homework}
+\noindent The bounding box of United States in terms of (lat,lon) is (-125.0011, 24.9493) and (-66.9326, 49.5904). Find all
+businesses that are located in US. Moreover, find which state in US has the highest number of 5 star businesses.
+\end{DIY}
+
+\newpage
+\subsubsection{Bi-variate Distribution}
+\noindent \textbf{\underline{Question}}: What is the distribution of open v/s closed business? 
+<<status,eval=FALSE>>=
+table(business$is_open)
+## get frequency of open v/s closed businesses 
+@
+
+\begin{DIY}{Homework}
+\noindent Refer to \textcolor{cyan}{\url{https://www.statmethods.net/graphs/pie.html}} and generate the pie chart as shown below
+\includegraphics[width=9 cm]{./viz/ext/pieChartBusinessStatus.jpeg}
+\end{DIY}
+
+
+\begin{DIY}{Homework}
+\noindent Refer to \textcolor{cyan}{\url{https://www.statmethods.net/graphs/boxplot.html}} and generate the boxplot as shown below. Moreover explain the plot
+\includegraphics[width=12 cm]{./viz/ext/BoxPlot_Ratings_OpenStatus.jpeg}
+\end{DIY}
+
+\newpage
+\subsubsection{Relationship among Attributes}
+\noindent \textbf{\underline{Question}}: Does there exist a relationship between ratings and number of reviews?
+<<corr_Review_Stars>>=
+plot(business$review_count,business$stars,
+      main = "Relation b/w review count and rating",
+     xlab = "review_count", ylab = "rating")
+##scatterplot of review count and ratings
+@
+
+\begin{DIY}{Think}
+\noindent Explain the plot
+\end{DIY}
+
+\begin{DIY}{Homework}
+\noindent Generate the scatter-plot that plots the relationship between review count and ratings for all open businesses and has number of reviews $\leq$ 1000.
+\end{DIY}
+
+\newpage
+\subsection{The \textbf{\emph{category}} dataset}
+\noindent Import the file \emph{\textbf{category.csv}} into your R environment.  
+<<cache.lazy=TRUE,echo=FALSE,message=FALSE,warning=FALSE>>=
+category <- read_csv("~/Documents/untitled folder 2/data/yelp/category.csv")
+@
+
+\subsubsection{Dimension and Attributes}
+\noindent \textbf{\underline{Question}}: What is the dimension of the data and what are the various attributes?
+<<dimCategories>>=
+dim(category)
+##get dimension of the data
+colnames(category)
+##get attributes of the data
+@
+
+\subsubsection{Sorting and Selection}
+\noindent \textbf{\underline{Question}}: Which are the 10 most frequent categories?  
+<<,eval=FALSE>>=
+countPerCategory <- aggregate(category$category,
+                              by=list(category$category),
+                              length
+                             )
+##count the number of occurence of each category
+names(countPerCategory) <- c("category","count")
+
+top10Categories<-head(countPerCategory[
+                            order(countPerCategory$count,
+                                  decreasing = TRUE
+                                  ),
+                          ],
+         n=10
+     )
+##sort the frequency data frame in descending order
+##and list the top 10
+top10Categories
+
+@
+
+\noindent \textbf{\underline{Question}}: Which business belong to the 10 most frequent categories?  
+<<business_top10Categories,eval=FALSE>>=
+businesses_top10Categories <- category[category$category %in% 
+                                         top10Categories[,1],]
+##list all entries in the category file that 
+#belong to one of the top 10 categories
+@
+
+\begin{DIY}{Think}
+\noindent How would you check if the filtering criteria applied in the last step returns the correct result
+\end{DIY}
+
+\subsubsection{Distribution of the Data}
+\noindent \textbf{\underline{Question}}: Are businesses assigned to multiple categories? How many such businesses exist?
+<<>>=
+businessIdFreq <- table(category$business_id)
+##get number of categories each business has been assigned to
+length(businessIdFreq > 0) > 0
+##check if there are businesses assigned to multiple categories
+plot(businessIdFreq[order(
+                          businessIdFreq,
+                          decreasing = TRUE
+                          )
+                    ],
+     xlab = "Businesses",
+     ylab="Number of Assigned Categories",
+     main = "Distribution of category assignment of businesses",  
+     xaxt = 'n')
+##sort the frequency of category assignment in descending
+##order and plot the same
+@
+
+\begin{DIY}{Think}
+\noindent Explain the plot
+\end{DIY}
+
+\subsubsection{Joining Data sets}
+\noindent \textbf{\underline{Question}}: Which business belong to the category "shopping"?  
+<<,eval=FALSE>>=
+shopping <- business[business$id %in% 
+                        businesses_top10Categories
+                            [businesses_top10Categories$category
+                                == "Shopping",
+                            ]$business_id,
+         ]
+##list all businesses from the business dataframe 
+##that belong to the category "shopping"  
+shopping
+@
+
+\begin{DIY}{Think}
+\noindent Try using 
+<<,eval=FALSE>>=
+businesses_top10Categories[
+          businesses_top10Categories$category
+          == "Shopping",
+          "business_id"
+          ]
+@
+instead to get the list of businesses labelled with category = "Shopping". Explain the difference
+\end{DIY}
+
+
+\begin{DIY}{Homework}
+\noindent Filter all businesses from the business data frame that belong to one of the top 10 categories
+\end{DIY}
+
+\begin{DIY}{Homework}
+\noindent Calculate the average reviews count for businesses belonging to the top 10 categories and compare it against the average review count for businesses belonging to the bottom 10 categories
+\end{DIY}
+
+\subsection{The \textbf{\emph{attribute}} dataset}
+\noindent Import the file \emph{\textbf{attribute.csv}} into your R environment.  
+<<cache.lazy=TRUE,echo=FALSE,message=FALSE,warning=FALSE>>=
+attribute <- read_csv("~/Documents/untitled folder 2/data/yelp/attribute.csv")
+@
+
+\subsubsection{Dimension and Attributes}
+\noindent \textbf{\underline{Question}}: What is the dimension of the data and what are the various attributes?
+<<dimAttribute>>=
+dim(attribute)
+##get dimension of the data
+colnames(attribute)
+##get attributes of the data
+@
+
+\subsubsection{Filtering, Sorting and Joining }
+\noindent \textbf{\underline{Question}}: Which attributes are prevalent for restaurants with 5 star rating?
+<<prevalentAttributes>>=
+fiveStarRestaurants<-business[(business$id %in% 
+                  category[
+                            category$category == "Restaurants",
+                         ]$business_id
+          ) 
+         & 
+         (business$stars == max(business$stars)),
+       ]$id
+##get id's of 5 star restaurants
+
+attributeCount <- table(attribute[
+                                  fiveStarRestaurants
+                                  %in% 
+                                  attribute$business_id,
+                                  "name"]
+                      )
+##find attributes corresponding to the matching business 
+##and count their number of occurences 
+
+sortedAttributeCount <- attributeCount[order(
+                                        attributeCount,
+                                        decreasing = TRUE
+                                        )
+                                      ]
+##sort the attributes in descending order of their occurence
+
+sortedAttributePercent <- sortedAttributeCount / sum(sortedAttributeCount) * 100
+##normalize the counts                              
+
+par(las=2) 
+##make lable text perpendicular to the axis
+
+par(mar=c(5,12,4,2))
+##increase y-axis margin
+
+barplot(sortedAttributePercent[sortedAttributePercent > 1],
+        horiz=TRUE,
+        cex.names = 0.8,
+        xlab = "% of occurence",
+        main = "Distribution of attributes for 5 star restaurants")
+##plot the distribution of attributes 
+##that occur at least 1% of the time
+@
+
+\begin{DIY}{Warning}
+\noindent Pay close attention to the \textbf{\emph{par()}} function in the example
+\end{DIY}
+
+\begin{DIY}{Homework}
+\noindent Read the help manual of the \textbf{\emph{par()}} function
+\end{DIY}
+
+\begin{DIY}{Homework}
+\noindent\begin{itemize}
+  \item Which attributes are prevalent for restaurants with 3 star rating? Compare the same with attributes of restaurants that have a rating of 5 stars. Explain your observation
+  \item Do the same analysis for businesses which have category as "Shopping" 
+\end{itemize}
+\end{DIY}
+
+
+%\subsection{dplyr}
+%\subsection{data.table}

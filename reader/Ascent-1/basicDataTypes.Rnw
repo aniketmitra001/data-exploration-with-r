@@ -1,0 +1,41 @@
+% !Rnw root = Introduction.Rnw
+\newpage
+%===============================
+\section{Basic Data Types}
+%===============================
+\begin{HIGHLIGHT}
+\par\noindent{
+Objects are the center of computations in R, along with the function calls that create and use those objects.
+}
+\end{HIGHLIGHT}
+
+\begin{DIY}{Think}
+What are objects in R? Why are functions and objects dual to each other? 
+\end{DIY}
+
+\subsubsection{The $class()$ function}
+\noindent Every object in R has a \emph{type} associated with it, which signifies the kind of data it contains e.g numbers, strings etc. The $class()$ function accepts an object as an argument and returns its type.
+
+\subsection{Data Type for Boolean}
+\subsubsection{The ``logical'' type}
+<<logical>>=
+class(TRUE)
+class(FALSE)
+@
+\subsection{Data Type for Numbers}
+\subsubsection{The ``numeric'' type}
+<<>>=
+class(1)
+class(3.141593)
+@
+\subsection{Data Type for Strings}
+\subsubsection{The ``character'' type}
+<<>>=
+class("Carpe Diem")
+@
+\subsection{Concatenating Strings}
+\subsubsection{The $paste()$ function}
+<<>>=
+paste("Data Analysis","with R",sep=",")
+@
+

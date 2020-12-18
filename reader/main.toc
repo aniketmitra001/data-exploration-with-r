@@ -1,0 +1,126 @@
+\select@language {english}
+\contentsline {chapter}{\numberline {1}The Liftoff}{11}
+\contentsline {section}{\numberline {1.1}The Mission}{11}
+\contentsline {subsection}{\numberline {1.1.1}Stages of Data Exploration}{12}
+\contentsline {subsection}{\numberline {1.1.2}The Geometry of Data}{13}
+\contentsline {subsection}{\numberline {1.1.3}Challenges of Data Exploration}{14}
+\contentsline {subsection}{\numberline {1.1.4}Data and Society}{15}
+\contentsline {subsection}{\numberline {1.1.5}Software for Data Exploration}{17}
+\contentsline {section}{\numberline {1.2}Why R?}{17}
+\contentsline {subsection}{\numberline {1.2.1}A Brief History of R}{18}
+\contentsline {subsection}{\numberline {1.2.2}Concepts for Programming with R}{19}
+\contentsline {subsubsection}{Functional Programming}{19}
+\contentsline {subsubsection}{Classes and Methods}{19}
+\contentsline {subsubsection}{Data Frames}{20}
+\contentsline {subsubsection}{Ecosystem}{20}
+\contentsline {section}{\numberline {1.3}RStudio}{21}
+\contentsline {chapter}{\numberline {2}The Ascent - PART A}{25}
+\contentsline {section}{\numberline {2.1}Using R}{25}
+\contentsline {section}{\numberline {2.2}Basic Data Types}{26}
+\contentsline {subsubsection}{The $class()$ function}{26}
+\contentsline {subsection}{\numberline {2.2.1}Data Type for Boolean}{26}
+\contentsline {subsubsection}{The ``logical'' type}{26}
+\contentsline {subsection}{\numberline {2.2.2}Data Type for Numbers}{26}
+\contentsline {subsubsection}{The ``numeric'' type}{26}
+\contentsline {subsection}{\numberline {2.2.3}Data Type for Strings}{27}
+\contentsline {subsubsection}{The ``character'' type}{27}
+\contentsline {subsection}{\numberline {2.2.4}Concatenating Strings}{27}
+\contentsline {subsubsection}{The $paste()$ function}{27}
+\contentsline {section}{\numberline {2.3}Coercion}{27}
+\contentsline {subsubsection}{The ``is'' and ``as'' methods}{27}
+\contentsline {subsection}{\numberline {2.3.1}Coercion between Boolean and Numbers}{27}
+\contentsline {subsection}{\numberline {2.3.2}Coercion between Boolean and Strings}{28}
+\contentsline {subsection}{\numberline {2.3.3}Coercion between Numbers and Strings}{29}
+\contentsline {section}{\numberline {2.4}Operators}{30}
+\contentsline {subsection}{\numberline {2.4.1}Arithmetic Operators}{30}
+\contentsline {subsection}{\numberline {2.4.2}Comparison Operators}{31}
+\contentsline {subsection}{\numberline {2.4.3}Logical Operators}{32}
+\contentsline {subsection}{\numberline {2.4.4}Special Operators}{32}
+\contentsline {subsubsection}{Want Help? Use \textbf {?} operator}{32}
+\contentsline {subsubsection}{Want to Write a Formula? Use $\sim $ operator}{33}
+\contentsline {subsubsection}{Want to Assign a Value? Use $<-$ operator}{33}
+\contentsline {section}{\numberline {2.5}Vectors}{34}
+\contentsline {subsection}{\numberline {2.5.1}Generating Sequences}{34}
+\contentsline {subsubsection}{The : operator}{34}
+\contentsline {subsection}{\numberline {2.5.2}Replicating Numbers}{34}
+\contentsline {subsection}{\numberline {2.5.3}Vectors and their Type}{35}
+\contentsline {subsection}{\numberline {2.5.4}Length of a Vector}{36}
+\contentsline {subsubsection}{The $length()$ function}{36}
+\contentsline {subsection}{\numberline {2.5.5}Distinct Elements of a Vector}{36}
+\contentsline {subsubsection}{The $unique()$ function}{36}
+\contentsline {subsection}{\numberline {2.5.6}Sum of a Vector}{36}
+\contentsline {subsubsection}{The $sum()$ function}{36}
+\contentsline {subsection}{\numberline {2.5.7}Coercing Vectors}{37}
+\contentsline {subsection}{\numberline {2.5.8}Indexing Vectors}{38}
+\contentsline {subsection}{\numberline {2.5.9}Vectorizing}{40}
+\contentsline {subsubsection}{Vectorizing with Arithmetic Operators}{40}
+\contentsline {subsubsection}{Vectorizing with Comparison Operators}{41}
+\contentsline {subsubsection}{Are All Values True?}{41}
+\contentsline {subsubsection}{Which Values Are True?}{42}
+\contentsline {section}{\numberline {2.6}Data Frames}{43}
+\contentsline {subsection}{\numberline {2.6.1}Data sets in R}{43}
+\contentsline {subsection}{\numberline {2.6.2}View a data set}{43}
+\contentsline {subsubsection}{The $View()$ function}{43}
+\contentsline {subsection}{\numberline {2.6.3}Type of an Data Frame}{43}
+\contentsline {subsubsection}{The $class()$ function}{43}
+\contentsline {subsection}{\numberline {2.6.4}Size of a Data Frame}{43}
+\contentsline {subsubsection}{The $dim()$ function}{43}
+\contentsline {subsection}{\numberline {2.6.5}Attribute of a Data Frame}{44}
+\contentsline {subsubsection}{The \textbf {\$} operator}{44}
+\contentsline {subsection}{\numberline {2.6.6}Create a Histogram}{44}
+\contentsline {subsubsection}{The $hist()$ function}{44}
+\contentsline {subsection}{\numberline {2.6.7}Create a Scatterplot}{46}
+\contentsline {subsubsection}{The $plot()$ function}{46}
+\contentsline {subsection}{\numberline {2.6.8}Create a Data Frame}{47}
+\contentsline {section}{\numberline {2.7}Input/Output with External Sources}{48}
+\contentsline {subsection}{\numberline {2.7.1}IO with RDBMS}{48}
+\contentsline {chapter}{\numberline {3}The Ascent - PART B}{53}
+\contentsline {section}{\numberline {3.1}The Dataset}{53}
+\contentsline {section}{\numberline {3.2}Data Wrangling}{54}
+\contentsline {subsection}{\numberline {3.2.1}The \textbf {\emph {business}} dataset}{54}
+\contentsline {subsubsection}{Dimension and Attributes}{54}
+\contentsline {subsubsection}{Uni-variate Distribution}{55}
+\contentsline {subsubsection}{Sorting and Selection}{56}
+\contentsline {subsubsection}{Aggregation}{56}
+\contentsline {subsubsection}{Filtering}{57}
+\contentsline {subsubsection}{Bi-variate Distribution}{58}
+\contentsline {subsubsection}{Relationship among Attributes}{59}
+\contentsline {subsection}{\numberline {3.2.2}The \textbf {\emph {category}} dataset}{60}
+\contentsline {subsubsection}{Dimension and Attributes}{60}
+\contentsline {subsubsection}{Sorting and Selection}{60}
+\contentsline {subsubsection}{Distribution of the Data}{61}
+\contentsline {subsubsection}{Joining Data sets}{62}
+\contentsline {subsection}{\numberline {3.2.3}The \textbf {\emph {attribute}} dataset}{63}
+\contentsline {subsubsection}{Dimension and Attributes}{63}
+\contentsline {subsubsection}{Filtering, Sorting and Joining }{64}
+\contentsline {section}{\numberline {3.3}Control Structures}{66}
+\contentsline {subsection}{\numberline {3.3.1}The \textbf {\emph {checkin}} dataset}{66}
+\contentsline {subsubsection}{Dimension and Attributes}{66}
+\contentsline {subsubsection}{Splitting Strings}{66}
+\contentsline {subsection}{\numberline {3.3.2}The \textbf {\emph {for}} loop}{67}
+\contentsline {subsubsection}{Iterative Vectorization}{67}
+\contentsline {subsection}{\numberline {3.3.3}The \textbf {\emph {if}} statement}{68}
+\contentsline {subsubsection}{Conditional Assignment}{68}
+\contentsline {subsubsection}{Validation}{69}
+\contentsline {subsubsection}{Conditional Distribution}{71}
+\contentsline {section}{\numberline {3.4}Functions}{73}
+\contentsline {chapter}{\numberline {4}The Orbiting}{77}
+\contentsline {section}{\numberline {4.1}The Grammar of Graphics}{77}
+\contentsline {section}{\numberline {4.2}The ggplot2 Package}{78}
+\contentsline {subsection}{\numberline {4.2.1}A Step By Step Guide To Visualization with ggplot2}{79}
+\contentsline {subsection}{\numberline {4.2.2}Generating a \textbf {\emph {Boxplot}}}{85}
+\contentsline {subsection}{\numberline {4.2.3}Generating a \textbf {\emph {Barplot}}}{86}
+\contentsline {subsection}{\numberline {4.2.4}Zooming into a Plot}{87}
+\contentsline {subsection}{\numberline {4.2.5}Changing Axis Resolution}{88}
+\contentsline {subsection}{\numberline {4.2.6}Generating Stacked Barplot and Dodged Barplot}{89}
+\contentsline {subsection}{\numberline {4.2.7}Merging Data Frames}{92}
+\contentsline {subsection}{\numberline {4.2.8}Generating a \textbf {\emph {Densityplot}}}{93}
+\contentsline {subsection}{\numberline {4.2.9}Smoothing Density Plots}{95}
+\contentsline {subsection}{\numberline {4.2.10}Combining Multiple Plots}{97}
+\contentsline {subsubsection}{Centering and Scaling the Data}{97}
+\contentsline {subsection}{\numberline {4.2.11}Generating a \emph {\textbf {Columnplot}}}{98}
+\contentsline {section}{\numberline {4.3}Statistical Modeling}{100}
+\contentsline {subsection}{\numberline {4.3.1}Binary Vector Representation of Categorical Attributes}{100}
+\contentsline {subsection}{\numberline {4.3.2}Creating a Training and Validation Set}{103}
+\contentsline {subsection}{\numberline {4.3.3}Feature Analysis and Selection}{104}
+\contentsline {subsection}{\numberline {4.3.4}Setting up a Linear Regression Model}{110}

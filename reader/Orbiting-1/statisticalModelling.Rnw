@@ -1,0 +1,602 @@
+% !Rnw root = main.Rnw
+\newpage
+%======================================
+\section{Statistical Modeling}
+%======================================
+%==================================================================
+\subsection{Binary Vector Representation of Categorical Attributes}
+%==================================================================
+As explained in \ref{sec:GeomOfData}, each categorical value needs to be mapped to a different dimension. This requires us to represent categorical values as a binary vector.\\
+
+\noindent \textbf{\underline{Question}}: What is the binary vector representation of the top10 categories?
+<<constructBinCategoryDF>>=
+## a function to create a binary vector 
+## the function accepts the following arguments
+## category_ =  a category of type character whose corresponding position
+##   in the binary vector is set to TRUE
+## categoryNames_ = a vector of category names that defines the 
+##   total number of categories and hence the output dimension
+## returns: a vector of type logical which has dimensions  
+##            length(categoryNames_) x 1
+createBinaryCategoryVector <- function(category_,categoryNames_){
+  colIdx <- which(categoryNames_ == category_)
+  ## find the index of the categoryNames_ vector that 
+  ## matches the value in category_. The logical value
+  ## for this position has to be set to TRUE
+  leftVec <- rep ( FALSE,(colIdx-1) )
+  ## create a vector for the left of the matching position
+  rightVec <- rep ( FALSE, length(categoryNames_) - colIdx )
+  ## create a vector for the right of the matching position
+  categoryVec <- c(leftVec, TRUE, rightVec)
+  ##concatenate the left and right vectors to the value  
+  return(categoryVec)
+}
+
+CategoriesCount <- aggregate(category$category,
+                             by = list(category$category),
+                             length)
+## find the fereency of occurence of each category from the 
+## category dataset
+names(CategoriesCount) <- c("category","frequency")
+## assign attribute names to the CategoriesCount df 
+mostFrequentCategories <- head(
+                            CategoriesCount[
+                                          order(CategoriesCount$frequency,
+                                                decreasing = TRUE),
+                                        ],
+                            ## order the CategoriesCount dataframe in 
+                            ## decreasing order of occurence of
+                            ## each category
+                            n = 10
+                        )
+##  get the 10 most frequent categories
+business_mostFrequentCategories <- category[
+                                            category$category %in% 
+                                            mostFrequentCategories$category,
+                                           ] 
+## get all business id's belonging to the top 10 categories
+
+## length(unique(business_mostFrequentCategories$business_id)) < 
+##    length(business_mostFrequentCategories$business_id)
+## check if businesses are assigned to more than one category
+
+categoryMatrix <- t(
+                      sapply(business_mostFrequentCategories$category,
+                            FUN=createBinaryCategoryVector,
+                            categoryNames_=mostFrequentCategories$category
+                          )
+                  )
+## for every value in business_mostFrequentCategories$category apply 
+## the function createBinaryCategoryVector()  and transpose it to get 
+## a binary vector of dimension 
+## 1 X length(mostFrequentCategories$category)
+## Thefore for all applying the function to all elements of 
+## business_mostFrequentCategories$category will  
+## result in a matrix of dimension:
+## length(business_mostFrequentCategories$category)  X 
+##      length(mostFrequentCategories$category)
+
+row.names(categoryMatrix) <- NULL
+## set the row names of the category matrix to NULL to remove
+## duplicate row names as conversion of a matrix to a data.frame
+## expects unique rownames
+
+catVecDF <- as.data.frame(categoryMatrix) 
+## convert the matrix to a data frame 
+names(catVecDF) <- mostFrequentCategories$category
+## assign names to the data frame
+
+catVecDF <- data.frame(business_id = 
+                         business_mostFrequentCategories$business_id, 
+                       catVecDF)
+## add business_id to the data frame
+
+numCols <- dim(catVecDF)[2]
+## get the number of columns of the data frame
+
+CategoriesBinaryRep <- aggregate(catVecDF[,2:numCols],
+                                 by = list(catVecDF$business_id), 
+                                 FUN = sum)
+## aggregate the data frame by business_id such that an OR operation
+## takes place beetween two or more rows belonging to the same 
+## business id 
+
+names(CategoriesBinaryRep)[1] <- "business_id"
+## assign attribute name to the first column of the data frame
+
+result <- apply(CategoriesBinaryRep[,2:11],2,max)
+## validate whether there were any duplicate rows in 
+## the data. If that was the case, the max per column 
+## obtained by the apply command would be greater than 1
+@
+\begin{DIY}{Homework}
+  \begin{itemize}
+  \item Create a binary vector representation of the attributes, corresponding to the business\textunderscore id values in \textbf{CategoriesBinaryRep}. Name this data frame as \textbf{AttributesBinaryRep}. How many business id's could be found? List the business id's that could not be found. 
+  \item Use the checkins data frame that we created in \ref{sec: conditionalStatements} to compute the total number of checkins per day of week. Match the business\textunderscore id in this data frame to business\textunderscore id in \textbf{CategoriesBinaryRep}. For the ones that match,give it the same binary vector representation as \textbf{AttributesBinaryRep} but instead of 0/1, it should contain number of checkins per attribute. Name this data frame as \textbf{CheckinsBinaryRep}. Moreover, name each attribute in this data frames as numCheckins\textunderscore Monday,numCheckins\textunderscore Tuesday,....   
+  \item Merge all three data frame you created to obtain a new data frame. Name this as \textbf{dataSet}.
+\end{itemize}
+\end{DIY}
+
+<<echo=FALSE,cache.lazy=TRUE>>=
+attributes_mostFrequentCategories <- attribute[
+      attribute$business_id %in% 
+         business_mostFrequentCategories$business_id,
+  ] 
+
+createBinaryAttributeVector <- function(attribute_,attributeNames_){
+  colIdx <- which(attributeNames_ == attribute_)
+  ## find the index of the categoryNames_ vector that 
+  ## matches the value in category_. The logical value
+  ## for this position has to be set to TRUE
+  leftVec <- rep ( FALSE,(colIdx-1) )
+  ## create a vector for the left of the matching position
+  rightVec <- rep ( FALSE, length(attributeNames_) - colIdx )
+  ## create a vector for the right of the matching position
+  attribVec <- c(leftVec, TRUE, rightVec)
+  ##concatenate the left and right vectors to the value  
+  return(attribVec)
+}
+
+attributeNames <- unique(attributes_mostFrequentCategories$name)
+
+##length(unique(attributes_mostFrequentCategories$business_id)) < 
+##  length(business_mostFrequentCategories$business_id)
+
+attributeMatrix <- t(
+                      sapply(
+                        attributes_mostFrequentCategories$name,
+                        createBinaryAttributeVector,
+                        attributeNames_ = attributeNames
+                        )
+                  )  
+row.names(attributeMatrix) <- NULL
+attribVecDF <- as.data.frame(attributeMatrix) 
+
+names(attribVecDF) <- attributeNames
+attribVecDF <- data.frame(business_id = 
+                            attributes_mostFrequentCategories$business_id, 
+                          attribVecDF)
+
+numCols <- dim(attribVecDF)[2]
+## get the number of columns of the data frame
+
+AttributesBinaryRep <- aggregate(attribVecDF[,2:numCols],
+                                 by = list(attribVecDF$business_id), 
+                                 FUN = sum)
+names(AttributesBinaryRep)[1] <- "business_id"
+
+checkinsPerDay <- aggregate(checkins[,"count"],
+                            by = list(checkins$business_id,checkins$day_of_week), sum)
+
+names(checkinsPerDay) <- c("business_id","day_of_week","numCheckins")
+
+daysOfweek <- unique(checkinsPerDay$day_of_week) 
+
+createBinaryCheckinsVector <- function(input_,daysOfweek_){
+  colIdx <- which(daysOfweek_ == input_[1])
+  count <- as.numeric(input_[2])
+  ## find the index of the categoryNames_ vector that 
+  ## matches the value in category_. The logical value
+  ## for this position has to be set to TRUE
+  leftVec <- rep ( 0,(colIdx-1) )
+  ## create a vector for the left of the matching position
+  rightVec <- rep ( 0, length(daysOfweek_) - colIdx )
+  ## create a vector for the right of the matching position
+  dowVec <- c(leftVec, count, rightVec)
+  ##concatenate the left and right vectors to the value  
+  return(dowVec)
+}
+
+
+checkinsMatrix <- t( apply(
+  checkinsPerDay[,c("day_of_week","numCheckins")],
+  1,
+  FUN = createBinaryCheckinsVector,
+  daysOfweek_ = daysOfweek
+))
+
+
+row.names(checkinsMatrix) <- NULL
+checkinsVecDF <- as.data.frame(checkinsMatrix) 
+
+names(checkinsVecDF) <- paste(rep("numCheckins_",length(daysOfweek)),daysOfweek,sep="")
+checkinsVecDF <- data.frame(business_id = 
+                              checkinsPerDay$business_id, 
+                            checkinsVecDF)
+
+numCols <- dim(checkinsVecDF)[2]
+## get the number of columns of the data frame
+
+CheckinsBinaryRep <- aggregate(checkinsVecDF[,2:numCols],
+                                 by = list(checkinsVecDF$business_id), 
+                                 FUN = sum)
+names(CheckinsBinaryRep)[1] <- "business_id"
+
+
+##dim(CheckinsBinaryRep[CheckinsBinaryRep$business_id %in% CategoriesBinaryRep$business_id,])
+
+dataSet <- merge(CheckinsBinaryRep,CategoriesBinaryRep,by.x = "business_id", by.y = "business_id")
+
+dataSet <- merge(dataSet,AttributesBinaryRep,by.x = "business_id" , by.y ="business_id" )
+
+##dim(dataSet)
+
+dataSet <- merge(dataSet,business[,c("id","is_open","stars","review_count")],by.x = "business_id" , by.y ="id" )
+@
+
+\newpage
+%=====================================================
+\subsection{Creating a Training and Validation Set}
+%=====================================================
+\begin{HIGHLIGHT}
+\par\noindent{
+In order to build a predictive model, we need to split the data into two or more \textbf{mutually exclusive} data sets, namely: 
+\begin{enumerate}
+      \item \textbf{\emph{Training Set(s)}} A randomly selected subset of the data, that is used to fit a model and further tune its parameters.
+      \item \textbf{\emph{Validation Set(s)}} A randomly selected subset of the data, whose outcomes we will predict, using our model and compare the predicted outcomes with the actual outcomes (the \textbf{ground truth}).  
+\end{enumerate}
+}
+\end{HIGHLIGHT}
+
+\noindent \textbf{\underline{Question}}: How can we create a training set and a test set from a given data set?
+<<>>=
+dim(dataSet)
+numRecords <- dim(dataSet)[1]
+Idx <- seq(1:numRecords) 
+## create a vector of same length as number of examples in
+## the training set
+trainingIdx <- sample(Idx, 0.8 * numRecords, replace = FALSE)
+## sample 80% of the values from the vector, without replacement
+## this results in an index for the training set
+testIdx <- Idx[!(Idx %in% trainingIdx)]
+## find the values in Idx that are not present in training Idx
+## This forms the inex of the validation set
+trainingSet <- dataSet[trainingIdx,]
+## Select rows from the dataSet that correspond to 
+##  indexes in trainingIdx
+testSet <- dataSet[testIdx,]
+## Select rows from the dataSet that correspond to 
+##  indexes in testIdx
+@
+
+\newpage
+%==================================================
+\subsection{Feature Analysis and Selection}
+%==================================================
+\noindent \textbf{\underline{Question}}: How can we detect outliers in the data?
+<<echo=TRUE,fig.height=5>>=
+## A function to create a boxplot
+## The function expects the following 
+## arguments
+## base_graph : the ggplot object with the dataframe
+##              attached to it
+## aesMap : the maping of the attrbutes to the x and y 
+##          axis
+## xlabel : the x axis label
+## ylabel : the y axis label
+## title  : title of the plot
+## return : the boxplot object
+boxplotMatrix <- function(base_graph,aesMap,xlabel,
+                          ylabel,title){
+  graph <- base_graph + 
+           aesMap +
+           geom_boxplot() +
+           ggtitle(title) + 
+           xlab(xlabel) +
+           ylab(ylabel)
+   return(graph)
+}
+
+base_graph <- ggplot(trainingSet)
+graph1 <- boxplotMatrix(base_graph,
+                        aes(x =
+                              as.factor(trainingSet$stars),
+                            y = trainingSet$numCheckins_Monday
+                        ),
+                        "stars","number of Chekins - Monday",
+                        "Dist of Checkins Monday")
+
+subsetCols <- names(trainingSet)[2:8]
+subsetCols <- append(subsetCols,"stars")
+ggcorrplot(cor(trainingSet[,subsetCols]),
+            method = "circle",
+           type ="lower",lab = TRUE,
+           lab_size = 3)
+@
+
+<<echo = FALSE>>=
+graph2 <- boxplotMatrix(base_graph,
+                        aes(x =
+                              as.factor(trainingSet$stars),
+                            y = trainingSet$numCheckins_Tuesday
+                        ),
+                        "stars","number of Chekins - Tuesday",
+                        "Dist of Checkins Tuesday")
+
+
+graph3 <- boxplotMatrix(base_graph,
+                        aes(x =
+                              as.factor(trainingSet$stars),
+                            y = trainingSet$numCheckins_Wednesday
+                        ),
+                        "stars","number of Chekins - Wednesday",
+                        "Dist of Checkins Wednesday")
+
+graph4 <- boxplotMatrix(base_graph,
+                        aes(x =
+                              as.factor(trainingSet$stars),
+                            y = trainingSet$numCheckins_Thursday
+                        ),
+                        "stars","number of Chekins - Thursday",
+                        "Dist of Checkins Thursday")
+
+
+graph5 <- boxplotMatrix(base_graph,
+                        aes(x =
+                              as.factor(trainingSet$stars),
+                            y = trainingSet$numCheckins_Friday
+                        ),
+                        "stars","number of Chekins - Friday",
+                        "Dist of Checkins Friday")
+
+graph6 <- boxplotMatrix(base_graph,
+                        aes(x =
+                              as.factor(trainingSet$stars),
+                            y = trainingSet$numCheckins_Saturday
+                        ),
+                        "stars","number of Chekins - Saturday",
+                        "Dist of Checkins Saturday")
+
+graph7 <- boxplotMatrix(base_graph,
+                        aes(x =
+                              as.factor(trainingSet$stars),
+                            y = trainingSet$numCheckins_Sunday
+                        ),
+                        "stars","number of Chekins - Sunday",
+                        "Dist of Checkins Sunday")
+
+
+@
+
+\begin{DIY}{Warning}
+\noindent In order to use ggcorrplot(), the user will need to install the package as follows:\\
+\noindent devtools::install\textunderscore github("kassambara/ggcorrplot")
+\end{DIY}
+
+\begin{DIY}{Homework}
+  \begin{itemize}
+  \item Generate the boxplot for all seven days and generate the plot as shown below
+  <<echo=FALSE,fig.width=14>>=
+gridExtra::grid.arrange(graph1,graph2,graph3,
+                        graph4,graph5,graph6,
+                        graph7,nrow=3,ncol=3)
+@
+  \item Do the same for reviews i.e detect outliers in checkins while using reviews as a grouping variable. Moreover generate the correlation plot matrix and box plot matrix for the same
+\end{itemize}
+\end{DIY}
+
+\newpage
+\noindent \textbf{\underline{Question}}: How can we remove outliers from the data?
+<<>>=
+## a function to returns the third quartile value grouped 
+## by another variable
+## the function accepts the following arguments
+## input_ =  the vector whose summary statistics needs to 
+##           be computed
+## groupingVec = the vector containing values on which 
+##          we need to group the  values in input_ vector
+## returns: the third quartile of each group  
+getOutlierThresholds <- function(input_,groupingVec){
+  result <- aggregate(input_,by = list(groupingVec),summary)
+  ## compute the summary statistics of input_ when grouped 
+  ## by the vales in groupingVec
+  ## returns a list where the first element is the grouping
+  ## values while the second element is the 
+  summaryStats <- result[,2]
+  groupingVals <- result[,1]
+  return(summaryStats[,5])
+}
+
+
+thresholdsPerRating <- apply(trainingSet[,2:8],
+                             2,
+                             getOutlierThresholds,
+                             groupingVec=trainingSet$stars)
+##apply the function getOutlierThresholds() on each of the 
+## numChekins__ columns of trainingSet and group by 
+## the attribute "stars"
+
+thresholdsPerRating <- data.frame("stars" = 
+                                    sort(unique(trainingSet$stars)),
+                                   thresholdsPerRating)
+## add the attribute "stars" to the data and create a data frame
+
+## a function to filter data based on 
+## input conditions
+## the function accepts the following arguments
+## input_ =  A vector of size 2 that contains  
+##           (a) attribute filter  
+##           (b) value threshold
+## dataVec1 = the vector on which the 
+##        attribute filter has to be applied
+## dataVec2 = the vector on which the 
+##        threshold filter has to be applied
+## returns: vector of logicals, where the values 
+## in positions that satisfy the conditions 
+## are set to FALSE
+removeOutliers <- function(input_,dataVec1,dataVec2){
+  rating <- input_[1]
+  threshold <- input_[2]
+  idxVec <-  rep(TRUE,length(dataVec1))
+  idxVec[dataVec2 == rating & dataVec1 > threshold] <- FALSE
+  return(idxVec)
+}
+
+result <- apply(thresholdsPerRating[,c("stars","numCheckins_Friday")],
+                1,removeOutliers,
+                dataVec1 = trainingSet$numCheckins_Friday, 
+                dataVec2 = trainingSet$stars)
+## apply the function removeOutliers() to each row of the 
+## first two columns of the thresholdsPerRating data frame 
+## The vectors on which the conditions have to be applied
+## are passed on dataVec1 and dataVec2.
+## the result is a logical matrix of dimensions
+##  length(stars) X dim(thresholdsPerRating)[1] 
+## the columns in result corresponds to 
+## the value of star
+
+outliers_numCheckins_Friday <- apply(result,1,prod)
+## For a given row of result, if either one of 
+## the condition is satisfied  
+## (i.e one of the columns = FALSE), 
+## the value should be filtered out. Therefore
+## we take a columnwise product
+
+cleanedTrainingSet <- trainingSet[as.logical(outliers_numCheckins_Friday),]
+## Filter all records from the trainingSet that ae not 
+## outliers
+
+graph1 <- boxplotMatrix(base_graph, ##the base graph
+                        aes(x =
+                              as.factor(cleanedTrainingSet$stars),
+                            y = cleanedTrainingSet$numCheckins_Monday
+                        ), ## aesthetics mapping
+                        "stars","number of Chekins - Monday",
+                        "Dist of Checkins Monday")
+ggcorrplot(cor(cleanedTrainingSet[,subsetCols]), ## 
+            method = "circle",
+           type ="lower",lab = TRUE,
+           lab_size = 3)
+@
+
+<<echo=FALSE,fig.width=14>>=
+base_graph <- ggplot(cleanedTrainingSet)
+graph1 <- boxplotMatrix(base_graph,
+                        aes(x =
+                              as.factor(cleanedTrainingSet$stars),
+                            y = cleanedTrainingSet$numCheckins_Monday
+                        ),
+                        "stars","number of Chekins - Monday",
+                        "Dist of Checkins Monday")
+graph2 <- boxplotMatrix(base_graph,
+                        aes(x =
+                              as.factor(cleanedTrainingSet$stars),
+                            y = cleanedTrainingSet$numCheckins_Tuesday
+                        ),
+                        "stars","number of Chekins - Tuesday",
+                        "Dist of Checkins Tuesday")
+
+
+graph3 <- boxplotMatrix(base_graph,
+                        aes(x =
+                              as.factor(cleanedTrainingSet$stars),
+                            y = cleanedTrainingSet$numCheckins_Wednesday
+                        ),
+                        "stars","number of Chekins - Wednesday",
+                        "Dist of Checkins Wednesday")
+
+graph4 <- boxplotMatrix(base_graph,
+                        aes(x =
+                              as.factor(cleanedTrainingSet$stars),
+                            y = cleanedTrainingSet$numCheckins_Thursday
+                        ),
+                        "stars","number of Chekins - Thursday",
+                        "Dist of Checkins Thursday")
+
+
+graph5 <- boxplotMatrix(base_graph,
+                        aes(x =
+                              as.factor(cleanedTrainingSet$stars),
+                            y = cleanedTrainingSet$numCheckins_Friday
+                        ),
+                        "stars","number of Chekins - Friday",
+                        "Dist of Checkins Friday")
+
+graph6 <- boxplotMatrix(base_graph,
+                        aes(x =
+                              as.factor(cleanedTrainingSet$stars),
+                            y = cleanedTrainingSet$numCheckins_Saturday
+                        ),
+                        "stars","number of Chekins - Saturday",
+                        "Dist of Checkins Saturday")
+
+graph7 <- boxplotMatrix(base_graph,
+                        aes(x =
+                              as.factor(cleanedTrainingSet$stars),
+                            y = cleanedTrainingSet$numCheckins_Sunday
+                        ),
+                        "stars","number of Chekins - Sunday",
+                        "Dist of Checkins Sunday")
+
+@
+\begin{DIY}{Homework}
+\noindent Generate the boxplot for all seven days (without the outliers) as shown below
+  <<echo=FALSE,fig.width=14>>=
+gridExtra::grid.arrange(graph1,graph2,graph3,
+                        graph4,graph5,graph6,
+                        graph7,nrow=3,ncol=3)
+@
+\end{DIY}
+
+\begin{DIY}{Homework}
+  \begin{itemize}
+  \item Generate the correlation matrix for rest of the features wrt the outcome variable. What do you observe? 
+  \item Are there features that have low correlation among themselves but high correlation with the outcome variable? Make a list of these features.
+   \item Using the function that your wrote in \ref{sec:functions}, add the following features to the data i.e
+   \begin{enumerate}
+      \item number of checkins on weekdays
+      \item number of checkins on weekends
+      \item number of checkins during morning
+      \item number of checkins during evening
+      \item top5 states
+   \end{enumerate}
+   \item  Analyze the new features, namely
+   \begin{enumerate}
+        \item Check for presence of outliers wrt to the outcome variable.Remove the outliers. Generate relevant plots to demonstrate the same. 
+        \item Check the correlation among these feature and wrt to the outcome variable. Explain your observation.
+    \end{enumerate}
+\end{itemize}
+\end{DIY}
+
+\newpage
+%==================================================
+\subsection{Setting up a Linear Regression Model}
+%==================================================
+\noindent \textbf{\underline{Question}}: How can we do linear regression?
+<<>>=
+modelFull <- lm(stars ~ . , data = trainingSet[,2:59])
+## fit a linear regression model on the full data where the 
+## outcome variable is the number of stars
+predictedStars <- predict.lm(modelFull,testSet[,2:58])
+## use the fitted model to predict the star of a business  
+squaredError <- (testSet$stars - predictedStars)^2
+MeanSquaredError <- mean(squaredError)
+## Calculate the mean squared error between the acutal rating
+## and predicted rating
+MeanSquaredError
+
+modelOutlierRemoved <- lm(stars ~ . , 
+                          data = cleanedTrainingSet[,2:59])
+## fit a linear regression model on the outlier removed data
+## outcome variable is the number of stars
+predictedStars <- predict.lm(modelOutlierRemoved,testSet[,2:58])
+## use the fitted model to predict the star of a business
+squaredError <- (testSet$stars - predictedStars)^2
+MeanSquaredError <- mean(squaredError)
+## Calculate the mean squared error between the acutal rating
+## and predicted rating
+MeanSquaredError
+@
+
+\begin{DIY}{Think}
+\noindent  Why do we see a higher mean squared error even after removing the outliers?
+\end{DIY}
+
+\begin{DIY}{Homework}
+\begin{itemize}
+  \item Setup a linear regression model by only considering the features that you have found useful in the previous section. Do you observe a change in the RMSE?
+  \item Do the same by considering the outcome variable as reviews
+  \item In \ref{sec:centering}, we converted ratings to a binary vector indicating whether it is above or below
+  the average. Setup a regression model using this as the outcome variable. Make sure you do feature analysis wrt this outcome variable. 
+\end{itemize}
+\end{DIY}

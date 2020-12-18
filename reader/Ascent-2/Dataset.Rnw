@@ -1,0 +1,12 @@
+% !Rnw root = Introduction.Rnw
+%===============================
+\section{The Dataset}
+%===============================
+\textbf{Its time to get real!!}. We give you the \textbf{``Yelp Open Dataset''} . 
+For the rest of our journey, we will be presenting different data manipulation, visualization and modelling techniques using this data set as our example. The idea is to get you acquainted with  typically large, and noisy data sets as is prevalent in today's world and to show you how to explore these data sets using R. The data set has been provided to you as set of 11 files, along with this reader. The inter-relation between the attributes can be found at the end of this chapter. Further details of the data set can be found in \textcolor{cyan}{\url{https://www.yelp.com/dataset}} 
+
+\begin{figure}[ht]
+ \centering
+    \includegraphics[ height=11cm,width = 15 cm]{./viz/ext/theYelpDataset.jpeg}
+\end{figure}
+

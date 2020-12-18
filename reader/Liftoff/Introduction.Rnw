@@ -1,0 +1,29 @@
+% !Rnw root = main.Rnw
+
+<<Mission,child='./TheMission.Rnw'>>=
+@
+
+
+<<WhyR,child='./WhyR.Rnw'>>=
+@
+    
+\section{RStudio}
+
+\begin{HIGHLIGHT}
+\par\noindent{
+\begin{DIY}{Homework}
+Watch the video on \\
+\textcolor{cyan}{\url{https://www.rstudio.com/resources/webinars/rstudio-essentials-webinar-series-part-1/}}\\
+and install R and RStudio on the computer that you will be accessing during the sessions.
+\end{DIY}
+}
+\end{HIGHLIGHT}
+
+\begin{DIY}{Warning}
+\textcolor{red}{It is important that the participants have R and RStudio installed on their computers before Session 1.}
+\end{DIY}
+
+\begin{DIY}{Homework}
+Download the RStudio IDE Cheat Sheet and use it as a reference while working with RStudio. In order to download the Cheat Sheet, \emph{Open RStudio $>$ Go to  Help Menu $>$ Cheatsheets $>$ RStudio IDE Cheat Sheet}
+\end{DIY}
+

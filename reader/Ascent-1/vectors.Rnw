@@ -1,0 +1,168 @@
+% !Rnw root = Introduction.Rnw
+\newpage
+%===============================
+\section{Vectors}
+%===============================
+\begin{HIGHLIGHT}
+\par\noindent{
+A \textbf{\emph{vector}} is a collection of \emph{indexable} objects.
+}
+\end{HIGHLIGHT}
+
+\begin{DIY}{Warning}
+\textcolor{red}{Vectors are one of the most important topics in R. So, the reader is urged to pay close attention!}
+\end{DIY}
+
+\subsection{Generating Sequences}
+\subsubsection{The : operator}
+\noindent Before, we start computing on collection of objects i.e \emph{vectorizing}, we should know how to generate a collection of objects (\emph{vectors}). 
+<<>>=
+1:10 #generate a sequence of numbers from 1 to 10
+10:1 #generate a sequence in reverse order
+@
+\noindent Now, if we wish to generate a sequence of numbers, but with any step size other than 1, we can do the following
+<<>>=
+seq(1,10,by=2) #generate a sequence of numbers with a step size of 2
+@
+\begin{DIY}{Homework}
+Try generating
+\begin{itemize}
+  \item the sequence in reverse order with a step size of 2
+  \item a sequence of all even numbers between 1 and 100
+  \item a sequence of numbers between 0 and 1 with a step size of 0.1
+\end{itemize}
+\end{DIY}
+
+\subsection{Replicating Numbers}
+A number can be generated multiple times using the $rep()$ function. The f\emph{first argument is the number} to be replicated while the \emph{second argument is the number of times} it has to be replicated.
+<<>>=
+rep(2,10) ## replicating 2 ten times
+@
+
+\subsection{Vectors and their Type}
+\noindent If we assign the generated sequence (which is a collection of objects) to another object, the new object is a \textbf{\emph{vector}}
+<<>>=
+x<-seq(1,10,by=2) ##generate a sequence from 1 to 10 with step
+##size of 2 and assign it to an object x.
+x
+@
+\begin{DIY}{Think}
+Get the type of x. Explain your observation
+\end{DIY}
+
+\begin{DIY}{Homework}
+Generate a vector of 10 element where each element has type logical.Moreover, the vector should be an alternating sequence of TRUE/FALSE. You are only allowed to use $seq()$ and coercion
+\end{DIY}
+
+\noindent Ind order to create a vector of strings we use the $c()$ function
+<<>>=
+y<- c("Apple","Orange","Pear") ##create a vector of characters
+y
+@
+
+\begin{DIY}{Homework}
+Generate a vector where elements are a mix of type
+\begin{itemize}
+  \item logical and character. What is the type of the resulting vector?
+  \item logical and numeric. What is the type of the resulting vector?
+  \item character and numeric. What is the type of the resulting vector?
+\end{itemize}
+\end{DIY}
+
+\begin{DIY}{Homework}
+Generate the sequence Apple\_1 Apple\_2 Apple\_3 ... Apple\_10
+\end{DIY}
+
+%==================================  
+\subsection{Length of a Vector}
+%==================================  
+\subsubsection{The $length()$ function}
+\noindent Once we have selected an attribute, we can count the number of elements in it using the $length()$  function and passing the attribute object as an argument to it. This function is synonymous to using $COUNT*$ in your SQL query.
+<<length>>=
+x <- seq(1,10) ##create a vector
+length(x) ##find the length of the vector
+@
+%==================================  
+\subsection{Distinct Elements of a Vector}
+%==================================  
+\subsubsection{The $unique()$ function}
+\noindent We can get the list of unique elements belonging to an attribute by using the $unique$ function. This function is synonymous to using the $DISTINCT()$ function in your SQL query  
+<<unique>>=
+x<- rep(2,5) ##create a vector containing the number 2 , five times
+unique(x) ##find unique element in the vector
+@
+%==================================  
+\subsection{Sum of a Vector}
+%==================================  
+\subsubsection{The $sum()$ function}
+\noindent Elements of a numeric vector can be easily summed up by passing it as an argument to the $sum()$ function
+<<sum>>=
+x<-1:10 ##create a vector
+sum(x) ## get the sum of elements in the vector
+@
+\noindent The cumulative sum of elements in a numeric vector can be computed by passing it as an argument to the $cumsum()$ function
+<<cumsum>>=
+x<-1:10 ##create a vector
+cumsum(x) ##get the cumulative/running sum of the vector
+@
+
+\subsection{Coercing Vectors}
+<<>>=
+x<-1:10 ## create a vector of 10 numbers
+x
+class(x) ## check the type of vector X
+as.character(x) ## coerce the numeric vector to character
+as.numeric(as.character(x)) ##coerce a vector of characters to numeric
+y<-as.logical(as.character(x)) ##coerce a vector of characters to logicals
+@
+\begin{DIY}{Think}
+Look at the rule for coercion presented in {Coercion} and explain each of the above examples.
+\end{DIY}
+
+\begin{DIY}{Warning}
+What does the vector y contain? As shown in the last example, for invalid coercion, R does not throw an error. On the contrary, it generates NA which signifies missing values. On large data sets, while doing multiple coercion and assigning them to objects, \textcolor{red}{it is very easy to make this mistake and it does happen often!}.
+\end{DIY}
+
+\newpage
+\subsection{Indexing Vectors}
+\begin{HIGHLIGHT}
+\par\noindent{
+\noindent The [] operator allows us to \emph{retrieve an element or a subset of elements from a vector} by specifying an index or a vector of indices. Moreover, objects can be passed to the [] operator thereby allowing for functions and comparison operators to be used in []. 
+}
+\end{HIGHLIGHT}
+<<>>=
+X<-seq(1,1.1,by=0.01) ##A generation and assignment  expression
+X[1:5] ##get the first 5 elements of the vector X
+X[10:5] ##get the last five element of vector X BUT in 
+##reversed order
+X[c(TRUE,FALSE)] ##get elements corresponding to all odd indexes
+X[c(FALSE,TRUE)] ##get elements corresponding to all even indexes
+X[c(1,5)] ##get the 1st and 5th element of X 
+X[-5]  ##get everything EXCEPT the 5th element
+X[-c(1,5)] ## get everything EXCEPT the 1st and the 5th elements
+@
+
+\begin{DIY}{Warning}
+For the sequence generated in the example try the following
+\begin{itemize}
+  \item Pass an index to the [] that is greater than the length of X. As you can see, instead of complaining, R just returns NA. Now if you were assigning the returned values to another vector, this would go completely unnoticed until much later in your data analysis pipeline wherein you start seeing erroneous results.
+  \item Assign a value to a vector index greater than the size of the vector length. Again you will notice that R does not complain (it should!) and just extends the vector until the new index and fills NA in between. In once is not careful, this can lead to a lot of problems!  
+  \item Pass NA as an index!!! Again R does not complain (as it should!) but just returns NA for every element of the vector
+\end{itemize}
+<<>>=
+X<-seq(1,1.05,by=0.01) 
+X
+X[8]
+X[8]<-5
+X
+X[NA]
+@
+\end{DIY}
+
+\begin{DIY}{Homework}
+The Fibonacci series is given by a sequence of the form $1,1,2,3,5,8,..$. Create a vector of length 2 and use the techniques you have learnt until now to generate the Fibonacci series. Also, you are allowed to create only one vector.
+\end{DIY}
+
+\begin{DIY}{Homework}
+For any arbitrary length vector of 2's, append an arbitrary length vector of 3's
+\end{DIY}

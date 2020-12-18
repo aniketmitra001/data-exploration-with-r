@@ -1,0 +1,201 @@
+% !Rnw root = Introduction.Rnw
+%==============================
+\section{The Mission}
+%==============================
+\begin{HIGHLIGHT}
+\par\noindent{
+{\centering\textbf{\emph{\Huge ``Data Exploration''}} \\}
+\vspace{\baselineskip}
+\textbf{Data Exploration} entails the following activities:
+\begin{enumerate}
+      \item Formulation of  meaningful questions
+      \item Organization of data in a way to answer the questions
+\end{enumerate}
+}
+\end{HIGHLIGHT}
+\begin{HIGHLIGHT}
+\par\noindent{
+\noindent Any real world entity can be treated as an object. 
+
+\noindent Every object has a set of attributes.
+
+\noindent The attributes of an object can be assigned values.
+}
+\end{HIGHLIGHT}
+
+\noindent For example, a student is an object. A student can have \emph{age, gender, score} etc.. as attributes. Some of these values can be numeric, for example age and score, while other attributes can be categorical, for example gender.  When we collect attribute values for multiple (possibly similar) objects, we end up getting a data set. 
+\begin{HIGHLIGHT}
+\par\noindent{
+\noindent The tabular representation of such data is one where the rows correspond to different objects, the columns correspond to the attributes of these objects and each cell corresponds to the attribute value for the object. 
+}
+\end{HIGHLIGHT}
+
+\noindent Data exploration is the step, in which we try to identify patterns in the data thereby leading us to prove or disprove our hypothesis about the objects. For example, if we constructed a hypothesis that \emph{female students score higher than male students}. Then, in order to prove or disprove it we would have to first collect the data, organize it, and then try to find patterns in the data that would confirm the correctness/incorrectness of the hypothesis.  
+
+\newpage
+%=========================================
+\subsection{Stages of Data Exploration}
+%=========================================
+\begin{HIGHLIGHT}
+\par\noindent{
+\emph{``It is as well to remember the following truths about models: all models are wrong; some models are better than others [George Box said more useful]; the correct model can never be known with certainty; and the simpler a model the better it is!''}
+}
+\end{HIGHLIGHT}
+
+\begin{figure}[ht]
+ \centering
+    \includegraphics[width = 13 cm]{./viz/ext/ppdac.png}
+\end{figure}
+
+\begin{HIGHLIGHT}
+\par\noindent{
+\emph{``The purpose of the Conclusion stage is to report the results of the study in the language of the Problem. Concise numerical summaries and presentation graphics [tabulations, visualizations] should be used to clarify the discussion. Statistical jargon should be avoided. As well, the Conclusion provides an opportunity to discuss the strengths and weaknesses of the Plan, Data and Analysis especially in regards to possible errors that may have arisen'' Mackay and Oldford (2000)}
+}
+\end{HIGHLIGHT}
+\newpage
+%=========================================
+\subsection{The Geometry of Data}
+\label{sec:GeomOfData}
+%=========================================
+\begin{HIGHLIGHT}
+\par\noindent{
+\noindent In order to find patterns among objects of interest, we should be able to identify similar objects. One advantage of finding similar objects is that it allows us to find smaller cohorts of objects within which we can try to find patterns, that may have been non-existent in the larger group. 
+}
+\end{HIGHLIGHT}
+
+\noindent For example, we may observe from the student data that gender does not correlate to score, but if we group the data by age, we may see that for certain age groups, gender does correlate with score. 
+
+\begin{HIGHLIGHT}
+\par\noindent{
+\noindent It is important to compare objects by considering all their attributes. In order to analyze or compute on all attribute of an object, we need to give it an abstract representation. This is achieved by \textbf{\emph{representing data in the Cartesian coordinate system}} where each coordinate corresponds to an attribute. 
+}
+\end{HIGHLIGHT}
+
+\noindent This is fairly easy when the attributes take a numeric value, for example if age = 17 and score = 75, its Cartesian coordinate representation would be (17,25).  
+
+\noindent The representation gets a bit complicated for categorical attributes. In order to give it a Cartesian coordinate representation, we need to map each attribute value to a number. However a number system also has the inherent concept of ordering wherein assigning a higher number to something means assigning higher weight to it.
+So, for the gender attribute, if we were to map the attribute value ``Male'' to 1 
+and ``Female'' to 2, internally this means that we are assigning a higher value to the attribute value ``Female''
+
+\noindent The correct way to do this is to treat each of the attribute values as representing a coordinate axis, such that when an attribute value is associated with an object it gets a value 1 and all other attribute values are set to 0. This is best explained by an example.
+
+ \begin{center}
+      \begin{tabular}{ |c|c|c|c|c| } 
+        \hline
+          \textbf{Id} & \textbf{Age} & \textbf{Gender} &  \textbf{Score} \\
+        \hline   
+          001 & 11 & M & 75\\
+        \hline
+          002 & 8 & F & 40\\
+        \hline  
+          003 & 10 & F & 82\\
+        \hline
+          004 & 15 & M  & 90\\
+        \hline       
+      \end{tabular}
+    \end{center}
+
+Now, the Cartesian coordinate representation of this data is shown in the table. $X1,X2,X3,X4$ are the coordinate axis.
+
+ \begin{center}
+      \begin{tabular}{ |c|c|c|c|c|c| } 
+        \hline
+          \textbf{Id} & \textbf{Age (X1)} & \textbf{isMale (X2)} &  \textbf{isFemale (X3)} & \textbf{Score (X4)} \\
+        \hline   
+          001 & 11 & 1 & 0 & 75\\
+        \hline
+          002 & 8 & 0 & 1 & 40\\
+        \hline  
+          003 & 10 & 0 & 1 & 82\\
+        \hline
+          004 & 15 & 1 & 0 & 90\\
+        \hline       
+      \end{tabular}
+    \end{center}
+
+\begin{figure}[ht]
+ \centering
+    \includegraphics[width = 15 cm]{./viz/ext/ScatterplotMatrix.jpeg}
+\end{figure}
+
+\noindent Visualization of data in the Cartesian coordinate system , when the number of dimensions is more than three, is quite challenging. A easy workaround is a 2-D pairwise visualization of attributes. 
+
+\begin{DIY}{Think}
+Explain the plot.
+\end{DIY}
+%=========================================
+\subsection{Challenges of Data Exploration}
+%=========================================
+\begin{HIGHLIGHT}
+\par\noindent{
+{\centering\textbf{\emph{``Lies, Damned Lies and Statistics''}} \\}
+\vspace{\baselineskip}
+\noindent The analysis stage of data exploration can be significantly hampered by
+\begin{itemize}
+  \item inadequate or unrepresentative data
+  \item misleading visualization of results
+\end{itemize}
+This can lead to inadequate reasoning on the basis of results and therefore drawing of incorrect conclusions.
+}
+\end{HIGHLIGHT}
+
+\begin{DIY}{Think}
+Argue why the example in section \ref{sec:GeomOfData} poses challenges to data exploration.
+\end{DIY}
+
+\begin{DIY}{Homework}
+Explore the data set in exercise1.csv.
+Which \emph{Stages of Data Exploration} did you apply while exploring the data set in exercise1.csv?
+What challenges did you face in your exploration?
+\end{DIY}
+\newpage
+%=============================
+\subsection{Data and Society}
+%=============================
+\begin{figure}[ht]
+ \centering
+    \includegraphics[width = 15 cm]{./viz/ext/DataVolumesVSHumanHistory.jpeg}
+\end{figure}
+
+\begin{DIY}{Think}
+It is true that data is ubiquitous to modern society and is being generated at an unprecedented scale at high \textbf{\emph{volumes}}, \textbf{\emph{velocity}} and \textbf{\emph{variety}} (the \textbf{3V's}). Try categorizing each of the data source in the info graphic ``\emph{Data Never Sleeps 5.0}''
+\begin{itemize}
+  \item into one of the \textbf{3V's}  
+  \item \textbf{\emph{high noise-to-signal}} ratio source v/s \textbf{\emph{low noise-to-signal}} ratio source
+  \item sources where high volume \textbf{\emph{correlates}} to better insights 
+\end{itemize}
+\end{DIY}
+
+\begin{DIY}{Homework}
+Read Section 19 of the \emph{Statistical Analysis Handbook}
+\end{DIY}
+
+\begin{DIY}{Think}
+Argue why the \textbf{4'th V} that you have just read about necessitates \emph{data exploration}
+\end{DIY}
+
+\begin{figure}
+ \centering
+    \includegraphics[width = 13 cm]{./viz/ext/dataeachday2017.jpg}
+\end{figure}
+
+\newpage
+%=========================================
+\subsection{Software for Data Exploration}
+%=========================================
+\begin{HIGHLIGHT}
+\par\noindent{
+{\centering\textbf{\emph{\Large ``Trustworthy, Flexible and Efficient Software: The Prime Directives''}} \\}
+\vspace{\baselineskip}
+\noindent The task of data exploration requires a tool that allows a user to ask meaningful questions about their applications quickly and flexibly. A wide range of techniques is needed to facilitate stages 1-4 of data exploration thereby requiring the data exploration tool to be flexible. Moreover, the tool should be able to provide answers to the questions asked ``\emph{within an acceptable time frame}''. The \textbf{3V's}, and the questions that are posed on the data, require complex transformations and computations on the data, whose correctness cannot be often verified by direct observation of the results in stage 5. Therefore, it is imperative that the underlying implementations of the transformations and computations (which is often \textbf{\emph{encapsulated}}) are correct.
+}
+\end{HIGHLIGHT}
+
+\begin{DIY}{Think}
+How does Microsoft Excel provide \textbf{\emph{Abstraction via Encapsulation}}. Think of an example where the trustworthiness comes into play.
+\end{DIY}
+
+\begin{DIY}{Warning}
+It is extremely hard to achieve \emph{trustworthiness}, \emph{flexibility} and \emph{efficiency} at the same time. As you go ahead in the course try to identify trade-offs between the three directives in R.  
+\end{DIY}
+

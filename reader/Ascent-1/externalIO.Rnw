@@ -1,0 +1,60 @@
+% !Rnw root = UsingR.Rnw
+\newpage
+%===============================
+\section{Input/Output with External Sources}
+%===============================
+\begin{HIGHLIGHT}
+\par\noindent{
+Reading in data from files like ``\textbf{.txt}'',``\textbf{.csv}'' and ``\textbf{.xls}'' into the R environment has been greatly simplified by RStudio. Just goto  Environment tab $->$ Import Dataset  and select the file type from which you want to import the data (for \emph{.txt} and  \emph{.csv} files choose the ``From CSV...'' option while for excel sheets choose ``From Excel..'' option). A new window will open up with a set of options that will guide you to import your data in R.        
+}
+R also provides a set of functions for reading and writing data. An inquisitive reader can read about them in \textcolor{cyan}{\url{https://www.datacamp.com/community/tutorials/r-tutorial-read-excel-into-r}}
+\end{HIGHLIGHT}
+
+\begin{DIY}{Think}
+Though RStudio has simplified the process of reading in data by providing a GUI, it hasn't provided any mechanism for writing data out of the R environment. What do you think this is the reason for this?  
+\end{DIY}
+
+\begin{DIY}{Homework}
+Do the following
+\begin{enumerate}
+  \item Remove the headers from exercise1.csv and try importing it into the R environment. What do you observe?
+  \item Replace exercise1.csv as exercise1.tsv (i.e change the delimiter between attributes from comma to tab) and try importing it into the R environment.
+\end{enumerate}
+\end{DIY}
+%===============================
+\subsection{IO with RDBMS}
+%===============================
+%=============================
+\begin{figure}[ht]
+ \centering
+    \includegraphics[width = 15 cm]{./viz/ext/IO_R_RDBMS.jpeg}
+\end{figure}
+\begin{HIGHLIGHT}
+A large number of different databases exist in the market and each of them has is its own way of setting up and managing connections with client applications. These low level connection details are encapsulated by R packages and the user only has to be aware of an abstract view as shown in the schematic. Details of R packages for connecting to some of the popular databases can be found in the following links:
+\begin{itemize}
+  \item How to Connect to an Oracle Database:
+  
+  \textcolor{cyan}{\url {http://rprogramming.net/connect-to-database-in-r/}}
+  \item How to Connect to a MySQL Database:
+  
+  \textcolor{cyan}{\url {https://www.r-bloggers.com/mysql-and-r/}}
+  \item How to Connect to MongoDB: 
+  
+  \textcolor{cyan}{\url {https://www.r-bloggers.com/r-and-mongodb/}}
+\end{itemize}
+\end{HIGHLIGHT}
+
+As, shown in the schematic, SQL queries can be constructed with the $sprintf()$ and $paste()$ function. We give a few examples here:
+<<>>=
+sprintf("select * from names where name in (%s)",
+        paste(c("'Andrew","John","Jane'"),collapse="','")
+       )
+
+sprintf("insert into networks (id, name) values (%d, '%s');",
+                    11, "John"
+        )
+@
+
+\begin{DIY}{Warning}
+Yes, it is indeed complicated to write queries in R as compared to writing them in a SQL editor. But the idea is to realize, as a user that one should do complicated aggregations and transformation of the data either solely in the database and store it back in tables where R can query from or within R itself (after having imported the data) but \textbf{NEVER} at the interface level. \emph{Complicated interfaces lead to unmanageable software}.When you have large amounts of data, trying to read in all the data of the database into R and then doing the data aggregation and transformation in R is also \textbf{NOT} a good idea as it creates a lot of dependency on the connector between R and the database which may have its own limitations based on how it has been implemented.  
+\end{DIY}

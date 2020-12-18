@@ -1,0 +1,131 @@
+% !Rnw root = Introduction.Rnw
+\newpage
+%===============================
+%===============================
+\section{Data Frames}
+%===============================
+%==================================  
+\subsection{Data sets in R}
+%==================================  
+\noindent R comes packaged with a list of data sets which can be viewed with the following command: 
+<<datasets,eval=FALSE>>=
+library(help = "datasets")
+@
+\noindent These data sets are a great starting point for new comers to try out different R expressions on, and getting your hands dirty. 
+%==================================  
+\subsection{View a data set}
+\subsubsection{The $View()$ function}
+%==================================  
+\noindent The $View()$ function can be used to see the contents of a data set wherein the argument to the function is the object that contains the data.
+<<view,eval=FALSE>>=
+View(iris) ##see the contents of a data frame
+@
+%==================================  
+\subsection{Type of an Data Frame}
+\subsubsection{The $class()$ function}
+%==================================  
+\noindent We can get the type of an R object by using the $class()$ function. This is synonymous to using the $DESC()$ function in your SQL query  
+<<class>>=
+class(iris) ## get the type of a data frame
+@
+%==================================  
+\subsection{Size of a Data Frame}
+\subsubsection{The $dim()$ function}
+%==================================  
+\noindent For objects that have a tabular structure, the $dim()$ function enables us to get the number of rows (observations) and number of columns (attributes)  
+<<dim>>=
+dim(iris) ##get the dimensions (number of rows,number of columns)
+@
+\noindent Now,try:
+<<class dim>>=
+class(dim(iris)) ##get the class of the object returned by
+##the call to dim() function
+@
+\begin{DIY}{Think}
+Do you see the difference in result when iris is passed as an argument to $class()$ v/s when $dim(iris)$ is passed as an argument to $class()$. Think about what does the output signify?   
+\end{DIY}
+
+\begin{DIY}{Think}
+Did you notice how $class()$ takes a data.frame as an argument in one case while takes $dim(iris)$ in another. Relate this observation to the ideas of objects and encapsulation that we have discussed until now.   
+\end{DIY}
+
+\begin{DIY}{Homework}
+Get only the row count of the data set
+\end{DIY}
+
+%==================================  
+\subsection{Attribute of a Data Frame}
+\subsubsection{The \textbf{\$} operator}
+%==================================  
+\noindent Attributes of an R object can be accessed by the \textbf{\$} operator. This operator is synonymous to selecting a column in a spreadsheet or a database table.
+<<dollar operator,eval=FALSE>>=
+resut<-iris$Sepal.Length ##acessing columns of a data frame
+@
+%==================================  
+\subsection{Create a Histogram}
+\subsubsection{The $hist()$ function}
+%==================================  
+\noindent A histogram which plots the number of occurrences of distinct elements (\textbf{\emph{discrete variables}}) in the attribute or number of occurrences of distinct intervals (\textbf{\emph{continuous variables}}) in the attribute.
+<<hist>>=
+hist(iris$Sepal.Length) ##create a histogram of sepal sength which
+##is a vector of the numeric class
+@
+
+\begin{DIY}{Think}
+Is the argument passed to $hist()$ a \emph{discrete attribute} or a \emph{continuous attribute}? Explain your choice.
+\end{DIY}
+
+\begin{DIY}{Think}
+Change the histogram plot to show normalized frequencies
+\end{DIY}
+
+\begin{DIY}{Homework}
+Find the sum of the first 10 and last 10 sepal lengths.
+\end{DIY}
+%==================================  
+\subsection{Create a Scatterplot}
+\subsubsection{The $plot()$ function}
+%==================================  
+\noindent The plot function takes two numeric arrays as arguments and treats each pair of values in the in the arguments as $(X,Y$ coordinates, thereby producing a scatter plot 
+<<plot>>=
+plot(cars$speed,cars$dist) ##create a scatter plot with speed on the x axis
+## and distance on the y axis
+@
+
+\begin{DIY}{Think}
+Can you \emph{explain} the plot that you see above?
+\end{DIY}
+
+\begin{DIY}{Think}
+Change the markers in the plot from circles to crosses. Moreover change the of the markers
+\end{DIY}
+
+\begin{DIY}{Think}
+What will you get when you pass a data frame with three attributes as an argument to the $plot()$ function
+\end{DIY}
+
+%==================================  
+\subsection{Create a Data Frame}
+%==================================  
+<<>>=
+X<-data.frame(c(1,2),c("apples","oranges"),
+              c(TRUE,FALSE))  ##adding data to a data frame wherein 
+##each vector represents a column of the deta frame
+X
+names(X)<-c("id","fruits","has_vitaminC") ##adding attribute names 
+##to the data frame
+X
+X$fruits
+@
+
+\begin{DIY}{Think}
+The output for the last expression shows that the attribute fruits has levels. What does this mean?
+\end{DIY}
+
+\begin{DIY}{Homework}
+Pick a data set from the list of available data sets and \emph{explore it} using the \emph{R expressions} you have just learnt.
+\end{DIY}
+
+\begin{DIY}{Homework}
+Create a data frame for the example shown in section \ref{sec:GeomOfData} and generate the plot that was shown in the same section.
+\end{DIY}

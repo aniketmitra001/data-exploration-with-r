@@ -1,0 +1,76 @@
+\textbf{Data Exploration with R} is a 15 hour intensive program wherein the participants will ``learn by doing``. In this regard, two case studies will be shared, which will be prepared from 
+  \begin{itemize}
+    \item \textcolor{cyan}{\large \url{https://www.kaggle.com/datasets}}
+  \end{itemize}
+\noindent The idea is that participants apply the techniques that they learn during the first six sessions, on the cases and prepare a presentation of their findings for the last two sessions. Also the participants will be expected to submit their R code before the last two sessions. Each case will require the participants to spend approximately 20-25 hours.
+
+%==============================
+\section*{Course Plan}
+%==============================  
+\begin{enumerate} 
+    \item \textbf{Data Exploration with R (3 hours)}
+     In the introduction sessions we will cover the following
+    \begin{itemize}
+      \item Setup R and Introduction to RStudio 
+      \item Reading files in R. Introduction to data frames and basic operation on Data frames 
+    \end{itemize}
+    
+    \item \textbf{Data Processing with R (1.5 hours)}
+    
+In these sessions we will cover different control structures in R. The participants will learn to write their first ``R function'' and ways to clean, aggregate and transform data:
+    \item \textbf{Exploratory Data Analysis and Data Visualization with R (3 hours)}
+    
+In these sessions the participants will learn how to compute summary statistics of data in R, visualize data sets and learn to understand and explain ``the story of the data set''
+    \item \textbf{Statistical Modelling with R (1.5 hours)}
+    
+In these sessions, the participants will learn how to build a linear regression model on a multivariate data set and interpret its results.
+    \item \textbf{Case Analysis (6 hours)}
+    
+In these sessions, the participants will present, analyse and brainstorm on the application of different methods that they have been introduced to in the previous sessions, namely data processing, data exploration, data visualization and predictive modelling to two real world data sets.
+  \end{enumerate}
+
+%===============================  
+\subsection*{The Books}
+%===============================  
+    % add the image of the reference book
+    \begin{figure}[ht]
+      \centering
+      \includegraphics[width = 6 cm]{./viz/ext/book_intro_toR.jpeg}\includegraphics[width=7cm]{./viz/ext/book_StatsAnalysis_Handbook.jpeg}
+    \end{figure}
+
+    %add table for mapping between sessions and book 
+    \begin{center}
+      \begin{tabular}{ |c|c|c|c| } 
+        \hline
+          \textbf{Session} & \textbf{Chapters in Chambers} & \textbf{Chapters in Smith}  \\
+        \hline   
+          1 &  1, 2, 6.1, 6.2 & 2, 19 \\
+        \hline
+          2 & 3, 6.3, 6.4, 6.5, 6.6, 6.7 & 6 \\
+        \hline  
+          3 &  7 & 7\\
+        \hline
+          4 & 6.8, 6.9, 6.10 & 3, 4, 16.1 \\
+        \hline       
+      \end{tabular}
+    \end{center}
+%==============================
+% End of section book
+%==============================
+\noindent Throughout this manual, the participant will come across the following three icons
+
+\begin{DIY}{Think}
+\emph{This icon urges the reader to think about the question that has been asked and such questions will be the main discussion points during sessions.}
+\end{DIY}
+
+\begin{DIY}{Homework}
+\emph{This icon will be associated with an exercise and the participants are expected to work on these.}
+\end{DIY}
+
+\begin{DIY}{Warning}
+\emph{This icon will be used when we want the reader to pay attention to a particular idea.}
+\end{DIY}
+
+%================================
+% End of chapter course overview
+%=================================
