@@ -108,7 +108,7 @@
 %	LOGO SECTION
 %----------------------------------------------------------------------------------------
 
-\includegraphics[width=10cm]{./viz/icons/Logo.png}\\[1cm] % Include a department/university logo - this will require the graphicx package
+%\includegraphics[width=10cm]{./viz/icons/Logo.png}\\[1cm] % Include a department/university logo - this will require the graphicx package
  
 %----------------------------------------------------------------------------------------
 
@@ -118,7 +118,7 @@
 
 %{\large \today}\\[2cm] % Date, change the \today to a set date if you want to be precise
 %\vspace{\baselineskip}
-{\large info@atozacademy.nl}\\[2cm] 
+{\large Aniket Mitra}\\[2cm] 
 
 \vfill % Fill the rest of the page with whitespace
 
@@ -1663,8 +1663,7 @@ What will you get when you pass a data frame with three attributes as an argumen
 \hlstd{X}\hlopt{$}\hlstd{fruits}
 \end{alltt}
 \begin{verbatim}
-## [1] apples  oranges
-## Levels: apples oranges
+## [1] "apples"  "oranges"
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -1822,9 +1821,9 @@ Therefore, we will formulate different questions that we wish to ask on the data
 \hlkwd{colnames}\hlstd{(business)}
 \end{alltt}
 \begin{verbatim}
-##  [1] "id"           "name"         "neighborhood" "address"     
-##  [5] "city"         "state"        "postal_code"  "latitude"    
-##  [9] "longitude"    "stars"        "review_count" "is_open"
+##  [1] "id"           "name"         "neighborhood" "address"      "city"        
+##  [6] "state"        "postal_code"  "latitude"     "longitude"    "stars"       
+## [11] "review_count" "is_open"
 \end{verbatim}
 \begin{alltt}
 \hlcom{##get the attributes of the data}
@@ -2182,6 +2181,10 @@ instead to get the list of businesses labelled with category = "Shopping". Expla
                                   \hlstd{attribute}\hlopt{$}\hlstd{business_id,}
                                   \hlstr{"name"}\hlstd{]}
                       \hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: Must subset rows with a valid subscript vector.\\\#\# [34mi[39m Logical subscripts must match the size of the indexed input.\\\#\# [31mx[39m Input has size 1229805 but subscript `fiveStarRestaurants \%in\% attribute\$business\_id` has size 1366.}}\begin{alltt}
 \hlcom{##find attributes corresponding to the matching business }
 \hlcom{##and count their number of occurences }
 
@@ -2190,9 +2193,17 @@ instead to get the list of businesses labelled with category = "Shopping". Expla
                                         \hlkwc{decreasing} \hlstd{=} \hlnum{TRUE}
                                         \hlstd{)}
                                       \hlstd{]}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'attributeCount' not found}}\begin{alltt}
 \hlcom{##sort the attributes in descending order of their occurence}
 
 \hlstd{sortedAttributePercent} \hlkwb{<-} \hlstd{sortedAttributeCount} \hlopt{/} \hlkwd{sum}\hlstd{(sortedAttributeCount)} \hlopt{*} \hlnum{100}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'sortedAttributeCount' not found}}\begin{alltt}
 \hlcom{##normalize the counts                              }
 
 \hlkwd{par}\hlstd{(}\hlkwc{las}\hlstd{=}\hlnum{2}\hlstd{)}
@@ -2207,9 +2218,9 @@ instead to get the list of businesses labelled with category = "Shopping". Expla
         \hlkwc{xlab} \hlstd{=} \hlstr{"% of occurence"}\hlstd{,}
         \hlkwc{main} \hlstd{=} \hlstr{"Distribution of attributes for 5 star restaurants"}\hlstd{)}
 \end{alltt}
-\end{kframe}
-\includegraphics[width=\maxwidth]{figure/prevalentAttributes-1} 
-\begin{kframe}\begin{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in barplot(sortedAttributePercent[sortedAttributePercent > 1], horiz = TRUE, : object 'sortedAttributePercent' not found}}\begin{alltt}
 \hlcom{##plot the distribution of attributes }
 \hlcom{##that occur at least 1% of the time}
 \end{alltt}
@@ -2424,8 +2435,8 @@ instead to get the list of businesses labelled with category = "Shopping". Expla
  \hlkwd{colnames}\hlstd{(checkins)}
 \end{alltt}
 \begin{verbatim}
-## [1] "business_id"      "day_of_week"      "position_of_week"
-## [4] "hour"             "minute"           "count"
+## [1] "business_id"      "day_of_week"      "position_of_week" "hour"            
+## [5] "minute"           "count"
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -2787,7 +2798,11 @@ Finally, regenerate the plot, but now faceted on the new column. Name the new da
 \hlkwd{xlab}\hlstd{(} \hlstr{"Status"} \hlstd{)} \hlopt{+} \hlkwd{ylab}\hlstd{(} \hlstr{"Ratings"} \hlstd{)}  \hlcom{##add guides to the plot}
 \hlstd{graph} \hlopt{+} \hlkwd{scale_y_continuous}\hlstd{(} \hlkwc{breaks} \hlstd{= interval )}
 \end{alltt}
-\end{kframe}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `cleansedBusiness\$status\_char` is discouraged. Use `status\_char` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `cleansedBusiness\$stars` is discouraged. Use `stars` instead.}}\end{kframe}
 \includegraphics[width=\maxwidth]{figure/Boxplot-1} 
 \begin{kframe}\begin{alltt}
 \hlcom{##change the resolution of the y axis }
@@ -2824,7 +2839,9 @@ Finally, regenerate the plot, but now faceted on the new column. Name the new da
          \hlkwc{subtitle} \hlstd{=} \hlstr{"A Barplot"} \hlstd{)} \hlopt{+}
 \hlkwd{xlab}\hlstd{(}\hlstr{"Reviews"}\hlstd{)} \hlopt{+} \hlkwd{ylab}\hlstd{(}\hlstr{"Frequency"}\hlstd{)} \hlcom{# add guides to the viz environment}
 \end{alltt}
-\end{kframe}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `cleansedBusiness\$review\_count` is discouraged. Use `review\_count` instead.}}\end{kframe}
 \includegraphics[width=\maxwidth]{figure/BarPlot-1} 
 
 \end{knitrout}
@@ -2859,7 +2876,9 @@ Try using geom\textunderscore histogram() instead of geom\textunderscore bar(). 
 \hlcom{## limiting it to  show values only till the third quartile}
 \hlstd{graph}
 \end{alltt}
-\end{kframe}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `cleansedBusiness\$review\_count` is discouraged. Use `review\_count` instead.}}\end{kframe}
 \includegraphics[width=\maxwidth]{figure/Zooming_In-1} 
 
 \end{knitrout}
@@ -2881,7 +2900,9 @@ Try using geom\textunderscore histogram() instead of geom\textunderscore bar(). 
 \hlcom{## x-axis to interval of 1}
 \hlstd{graph1}
 \end{alltt}
-\end{kframe}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `cleansedBusiness\$review\_count` is discouraged. Use `review\_count` instead.}}\end{kframe}
 \includegraphics[width=\maxwidth]{figure/Change_Axis_Resolution-1} 
 
 \end{knitrout}
@@ -2946,7 +2967,15 @@ Try using geom\textunderscore histogram() instead of geom\textunderscore bar(). 
               \hlkwc{nrow} \hlstd{=} \hlnum{2}
             \hlstd{)}  \hlcom{## generate both plots together. The nrow parameter }
 \end{alltt}
-\end{kframe}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `cleansedBusiness\$stars` is discouraged. Use `stars` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `cleansedBusiness\$review\_count` is discouraged. Use `review\_count` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `cleansedBusiness\$stars` is discouraged. Use `stars` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `cleansedBusiness\$review\_count` is discouraged. Use `review\_count` instead.}}\end{kframe}
 \includegraphics[width=\maxwidth]{figure/Aesthetics_Mapping-1} 
 \begin{kframe}\begin{alltt}
 \hlcom{## specifies the row-wise split of the visual environment. }
@@ -3112,7 +3141,17 @@ Try using geom\textunderscore histogram() instead of geom\textunderscore bar(). 
                 Yellow(adjust = 0.5)"}
     \hlstd{)}  \hlcom{## adds a caption to the plot }
 \end{alltt}
-\end{kframe}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `businesses\_top10Merged\$stars` is discouraged. Use `stars` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `businesses\_top10Merged\$stars` is discouraged. Use `stars` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `businesses\_top10Merged\$stars` is discouraged. Use `stars` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `businesses\_top10Merged\$stars` is discouraged. Use `stars` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `businesses\_top10Merged\$stars` is discouraged. Use `stars` instead.}}\end{kframe}
 \includegraphics[width=\maxwidth]{figure/Faceted_Density_Plot-1} 
 
 \end{knitrout}
@@ -3173,6 +3212,10 @@ should be on the centered review counts. Explain your observation.
 \end{alltt}
 
 
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `businesses\_top10Merged\$centered\_ratings` is discouraged. Use `centered\_ratings` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `businesses\_top10Merged\$centered\_ratings` is discouraged. Use `centered\_ratings` instead.}}
+
 {\ttfamily\noindent\itshape\color{messagecolor}{\#\# `stat\_bin()` using `bins = 30`. Pick better value with `binwidth`.}}\end{kframe}
 \includegraphics[width=\maxwidth]{figure/Centering_Ratings-1} 
 
@@ -3214,7 +3257,13 @@ should be on the centered review counts. Explain your observation.
 \hlkwd{xlab}\hlstd{(}\hlstr{"Category"}\hlstd{)} \hlopt{+} \hlkwd{ylab}\hlstd{(}\hlstr{"Distribution of Rating"}\hlstd{)} \hlopt{+}
 \hlkwd{ggtitle}\hlstd{(}\hlstr{"Distribution of Ratings per Category"}\hlstd{)} \hlcom{## add guides to the }
 \end{alltt}
-\end{kframe}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `businesses\_top10Merged\$rating\_categorization` is discouraged. Use `rating\_categorization` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `businesses\_top10Merged\$category` is discouraged. Use `category` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `businesses\_top10Merged\$centered\_ratings` is discouraged. Use `centered\_ratings` instead.}}\end{kframe}
 \includegraphics[width=\maxwidth]{figure/Column_Plot-1} 
 \begin{kframe}\begin{alltt}
 \hlcom{## plot}
@@ -3458,7 +3507,36 @@ In order to build a predictive model, we need to split the data into two or more
   \begin{itemize}
   \item Generate the boxplot for all seven days and generate the plot as shown below
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `trainingSet\$stars` is discouraged. Use `stars` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `trainingSet\$numCheckins\_Monday` is discouraged. Use `numCheckins\_Monday` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `trainingSet\$stars` is discouraged. Use `stars` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `trainingSet\$numCheckins\_Tuesday` is discouraged. Use `numCheckins\_Tuesday` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `trainingSet\$stars` is discouraged. Use `stars` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `trainingSet\$numCheckins\_Wednesday` is discouraged. Use `numCheckins\_Wednesday` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `trainingSet\$stars` is discouraged. Use `stars` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `trainingSet\$numCheckins\_Thursday` is discouraged. Use `numCheckins\_Thursday` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `trainingSet\$stars` is discouraged. Use `stars` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `trainingSet\$numCheckins\_Friday` is discouraged. Use `numCheckins\_Friday` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `trainingSet\$stars` is discouraged. Use `stars` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `trainingSet\$numCheckins\_Saturday` is discouraged. Use `numCheckins\_Saturday` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `trainingSet\$stars` is discouraged. Use `stars` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `trainingSet\$numCheckins\_Sunday` is discouraged. Use `numCheckins\_Sunday` instead.}}\end{kframe}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-44-1} 
 
 \end{knitrout}
@@ -3570,7 +3648,36 @@ In order to build a predictive model, we need to split the data into two or more
 \begin{DIY}{Homework}
 \noindent Generate the boxplot for all seven days (without the outliers) as shown below
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `cleanedTrainingSet\$stars` is discouraged. Use `stars` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `cleanedTrainingSet\$numCheckins\_Monday` is discouraged. Use `numCheckins\_Monday` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `cleanedTrainingSet\$stars` is discouraged. Use `stars` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `cleanedTrainingSet\$numCheckins\_Tuesday` is discouraged. Use `numCheckins\_Tuesday` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `cleanedTrainingSet\$stars` is discouraged. Use `stars` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `cleanedTrainingSet\$numCheckins\_Wednesday` is discouraged. Use `numCheckins\_Wednesday` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `cleanedTrainingSet\$stars` is discouraged. Use `stars` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `cleanedTrainingSet\$numCheckins\_Thursday` is discouraged. Use `numCheckins\_Thursday` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `cleanedTrainingSet\$stars` is discouraged. Use `stars` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `cleanedTrainingSet\$numCheckins\_Friday` is discouraged. Use `numCheckins\_Friday` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `cleanedTrainingSet\$stars` is discouraged. Use `stars` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `cleanedTrainingSet\$numCheckins\_Saturday` is discouraged. Use `numCheckins\_Saturday` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `cleanedTrainingSet\$stars` is discouraged. Use `stars` instead.}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Use of `cleanedTrainingSet\$numCheckins\_Sunday` is discouraged. Use `numCheckins\_Sunday` instead.}}\end{kframe}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-47-1} 
 
 \end{knitrout}
@@ -3616,7 +3723,7 @@ In order to build a predictive model, we need to split the data into two or more
 \hlstd{MeanSquaredError}
 \end{alltt}
 \begin{verbatim}
-## [1] 0.733
+## [1] 0.743
 \end{verbatim}
 \begin{alltt}
 \hlstd{modelOutlierRemoved} \hlkwb{<-} \hlkwd{lm}\hlstd{(stars} \hlopt{~} \hlstd{. ,}
@@ -3632,7 +3739,7 @@ In order to build a predictive model, we need to split the data into two or more
 \hlstd{MeanSquaredError}
 \end{alltt}
 \begin{verbatim}
-## [1] 1.11
+## [1] 1.05
 \end{verbatim}
 \end{kframe}
 \end{knitrout}

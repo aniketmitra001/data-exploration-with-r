@@ -110,7 +110,7 @@ opts_knit$set(self.contained=FALSE)
 %	LOGO SECTION
 %----------------------------------------------------------------------------------------
 
-\includegraphics[width=10cm]{./viz/icons/Logo.png}\\[1cm] % Include a department/university logo - this will require the graphicx package
+%\includegraphics[width=10cm]{./viz/icons/Logo.png}\\[1cm] % Include a department/university logo - this will require the graphicx package
  
 %----------------------------------------------------------------------------------------
 
@@ -120,7 +120,7 @@ opts_knit$set(self.contained=FALSE)
 
 %{\large \today}\\[2cm] % Date, change the \today to a set date if you want to be precise
 %\vspace{\baselineskip}
-{\large info@atozacademy.nl}\\[2cm] 
+{\large Aniket Mitra}\\[2cm] 
 
 \vfill % Fill the rest of the page with whitespace
 

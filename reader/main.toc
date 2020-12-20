@@ -1,4 +1,4 @@
-\select@language {english}
+\babel@toc {english}{}
 \contentsline {chapter}{\numberline {1}The Liftoff}{11}
 \contentsline {section}{\numberline {1.1}The Mission}{11}
 \contentsline {subsection}{\numberline {1.1.1}Stages of Data Exploration}{12}
@@ -110,17 +110,17 @@
 \contentsline {subsection}{\numberline {4.2.1}A Step By Step Guide To Visualization with ggplot2}{79}
 \contentsline {subsection}{\numberline {4.2.2}Generating a \textbf {\emph {Boxplot}}}{85}
 \contentsline {subsection}{\numberline {4.2.3}Generating a \textbf {\emph {Barplot}}}{86}
-\contentsline {subsection}{\numberline {4.2.4}Zooming into a Plot}{87}
-\contentsline {subsection}{\numberline {4.2.5}Changing Axis Resolution}{88}
-\contentsline {subsection}{\numberline {4.2.6}Generating Stacked Barplot and Dodged Barplot}{89}
-\contentsline {subsection}{\numberline {4.2.7}Merging Data Frames}{92}
-\contentsline {subsection}{\numberline {4.2.8}Generating a \textbf {\emph {Densityplot}}}{93}
-\contentsline {subsection}{\numberline {4.2.9}Smoothing Density Plots}{95}
-\contentsline {subsection}{\numberline {4.2.10}Combining Multiple Plots}{97}
-\contentsline {subsubsection}{Centering and Scaling the Data}{97}
-\contentsline {subsection}{\numberline {4.2.11}Generating a \emph {\textbf {Columnplot}}}{98}
-\contentsline {section}{\numberline {4.3}Statistical Modeling}{100}
-\contentsline {subsection}{\numberline {4.3.1}Binary Vector Representation of Categorical Attributes}{100}
-\contentsline {subsection}{\numberline {4.3.2}Creating a Training and Validation Set}{103}
-\contentsline {subsection}{\numberline {4.3.3}Feature Analysis and Selection}{104}
-\contentsline {subsection}{\numberline {4.3.4}Setting up a Linear Regression Model}{110}
+\contentsline {subsection}{\numberline {4.2.4}Zooming into a Plot}{88}
+\contentsline {subsection}{\numberline {4.2.5}Changing Axis Resolution}{90}
+\contentsline {subsection}{\numberline {4.2.6}Generating Stacked Barplot and Dodged Barplot}{91}
+\contentsline {subsection}{\numberline {4.2.7}Merging Data Frames}{95}
+\contentsline {subsection}{\numberline {4.2.8}Generating a \textbf {\emph {Densityplot}}}{96}
+\contentsline {subsection}{\numberline {4.2.9}Smoothing Density Plots}{98}
+\contentsline {subsection}{\numberline {4.2.10}Combining Multiple Plots}{100}
+\contentsline {subsubsection}{Centering and Scaling the Data}{100}
+\contentsline {subsection}{\numberline {4.2.11}Generating a \emph {\textbf {Columnplot}}}{101}
+\contentsline {section}{\numberline {4.3}Statistical Modeling}{104}
+\contentsline {subsection}{\numberline {4.3.1}Binary Vector Representation of Categorical Attributes}{104}
+\contentsline {subsection}{\numberline {4.3.2}Creating a Training and Validation Set}{107}
+\contentsline {subsection}{\numberline {4.3.3}Feature Analysis and Selection}{108}
+\contentsline {subsection}{\numberline {4.3.4}Setting up a Linear Regression Model}{116}
