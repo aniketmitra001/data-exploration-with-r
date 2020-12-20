@@ -1,2 +1,2 @@
-# Data_Analysis_with_R
-Documentation for the Course Data Analysis with R
+# Data Exploration with R
+[Data Exploration with R.pdf](https://aniketmitra001.github.io/data-exploration-with-r/)
